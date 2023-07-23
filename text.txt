@@ -1,0 +1,8 @@
+    for (let id of ids) {
+      const appendPk = perkuliahan.filter((pk) => pk.id === id)[0];
+      console.log(appendPk);
+      if (appendPk) {
+        console.log("masuk sini ../");
+        dataOutput.push(appendPk);
+      }
+    }
