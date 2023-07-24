@@ -49,7 +49,9 @@ const ListData = ({
   isForeign = false,
   templateFile = "template_group_management.xlsx",
   importFunction,
+  isCreate = true,
   exportName,
+  redNotActive = true,
 }) => {
   const { settings } = useSettings();
 
@@ -252,6 +254,7 @@ const ListData = ({
             updateOnly={updateOnly}
             isImport={isImport}
             isExport={isExport}
+            isCreate={isCreate}
             params={params}
             storeName={storeName}
             exportName={exportName}
@@ -277,7 +280,7 @@ const ListData = ({
             onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
             // getRowClassName={params => (!params.row.is_active ? 'hot' : '')}
             getRowClassName={(params) => {
-              if ("is_active" in params.row) {
+              if ("is_active" in params.row && redNotActive) {
                 return !params.row.is_active ? "hot" : "";
               }
               return "";

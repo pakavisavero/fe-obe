@@ -1,15 +1,4 @@
-import {
-  Autocomplete,
-  CircularProgress,
-  FormControl,
-  Grid,
-  styled,
-  TextField,
-  Typography,
-  InputLabel,
-  Select,
-  MenuItem,
-} from "@mui/material";
+import { Grid, Typography, InputLabel } from "@mui/material";
 
 import Link from "next/link";
 import { useEffect, useState, forwardRef } from "react";
@@ -22,31 +11,19 @@ import {
   fetchData,
   handleParams,
   removeParams,
-  updateModule,
-} from "src/store/apps/setting/module";
-
-import { fetchData as fetchDataModuleGroup } from "src/store/apps/setting/moduleGroup";
+  updateLinkMataKuliah,
+} from "src/store/apps/master/linkMataKuliah";
 
 import ListData from "src/views/apps/ListData";
 import CardActionCollapse from "src/views/ui/cards/actions/CardActionCollapse";
-import { useDebounce } from "use-debounce";
 
-import DatePickerWrapper from "src/@core/styles/libs/react-datepicker";
-import DatePicker from "react-datepicker";
-import format from "date-fns/format";
+import { fetchData as fetchDataMataKuliah } from "src/store/apps/master/mataKuliah";
 import { useDebouncedCallback } from "use-debounce";
 
 import { DrawColumn, DrawFilter, handleOnChangeRange } from "src/utils/field";
 import _ from "lodash";
 
 const FilterData = ({ storeName }) => {
-  const store = useSelector((state) => state[storeName]);
-  const { params } = store;
-
-  const { data: dataModuleGroup, loading: loadingModuleGroup } = useSelector(
-    (state) => state.moduleGroup
-  );
-
   const dispatch = useDispatch();
 
   const [dates, setDates] = useState([]);
@@ -57,14 +34,19 @@ const FilterData = ({ storeName }) => {
   const [startDateRangeModified, setStartDateRangeModified] = useState(null);
   const [endDateRangeModified, setEndDateRangeModified] = useState(null);
 
+  useEffect(() => {
+    dispatch(fetchDataMataKuliah());
+  }, [dispatch]);
+
   const defaultParam = {
     is_active: true,
     is_paging: false,
   };
 
-  useEffect(() => {
-    dispatch(fetchDataModuleGroup({ is_active: true }));
-  }, [dispatch]);
+  const handleFilterAutoComplete = (name) => (event, newValue) => {
+    const value = newValue ? newValue.id : null;
+    dispatch(handleParams({ name, value }));
+  };
 
   const debounced = useDebouncedCallback(
     (event) => {
@@ -75,27 +57,30 @@ const FilterData = ({ storeName }) => {
     { maxWait: 10000 }
   );
 
-  const handleFilterAutoComplete = (name) => (event, newValue) => {
-    const value = newValue ? newValue.id : null;
-    dispatch(handleParams({ name, value }));
-  };
+  const { data: dataMataKuliah, loading: loadingMataKuliah } = useSelector(
+    (state) => state.mataKuliah
+  );
 
   const fields = [
     {
-      name: "module_name",
-      type: "text",
-      onChange: debounced,
-      label: "Module Name",
+      name: "mata_kuliah",
+      type: "autocomplete",
+      onChange: handleFilterAutoComplete("mata_kuliah_id"),
+      label: "Mata Kuliah",
+      optLabel: "kode_mk",
+      optLabel2: "mata_kuliah",
+      data: _.sortBy(dataMataKuliah, ["mata_kuliah"]),
       xs: 12,
       md: 4,
     },
     {
-      name: "module_group",
+      name: "link",
       type: "autocomplete",
-      onChange: handleFilterAutoComplete("module_group_id"),
-      label: "Module Group",
-      optLabel: "module_name",
-      data: _.sortBy(dataModuleGroup, ["module_name"]),
+      onChange: handleFilterAutoComplete("mapping_id"),
+      label: "Link To",
+      optLabel: "kode_mk",
+      optLabel2: "mata_kuliah",
+      data: _.sortBy(dataMataKuliah, ["mata_kuliah"]),
       xs: 12,
       md: 4,
     },
@@ -156,49 +141,54 @@ function Index() {
       name: "id",
       type: "link",
       hide: true,
-      link: "/apps/setting/module/edit/",
+      link: "/apps/master/link-mata-kuliah/edit/",
       value: (value) => value.id,
       valueLink: (value) => value.id,
     },
     {
-      name: "module_name",
-      minWidth: 200,
-      headerName: "Module Name",
+      name: "mata_kuliah",
+      minWidth: 350,
+      headerName: "Mata Kuliah",
       type: "link",
-      link: "/apps/setting/module/edit/",
-      value: (value) => (value.module_name ? value.module_name : "-"),
+      link: "/apps/master/link-mata-kuliah/edit/",
+      value: (value) =>
+        value.mataKuliah
+          ? value.mataKuliah.kode_mk + " - " + value.mataKuliah.mata_kuliah
+          : "-",
       valueLink: (value) => value.id,
     },
     {
-      name: "module_group",
-      minWidth: 200,
-      headerName: "Module Group",
+      name: "link",
+      minWidth: 350,
+      headerName: "Link To",
+      link: "/apps/master/link-mata-kuliah/edit/",
       value: (value) =>
-        value.moduleGroup ? value.moduleGroup.module_name : "-",
+        value.mapping
+          ? value.mapping.kode_mk + " - " + value.mapping.mata_kuliah
+          : "-",
     },
   ];
 
   const defaultColumns = fields.map((field) => DrawColumn(field));
 
   const dataBreadcrumbs = [
-    { name: <Translations text={"Setting"} /> },
-    { name: "Module" },
+    { name: <Translations text={"Master"} /> },
+    { name: "Link Mata Kuliah" },
   ];
 
   return (
     <ListData
       defaultColumns={defaultColumns}
-      nameLabel={`${t("Module")}`}
-      storeName={"module"}
-      updateData={updateModule}
-      urlData={"/apps/setting/module/"}
+      nameLabel={`${t("Link Mata Kuliah")}`}
+      storeName={"linkMataKuliah"}
+      updateData={updateLinkMataKuliah}
+      urlData={"/apps/master/link-mata-kuliah/"}
       getData={fetchData}
       clearResponse={clearResponse}
-      filterData={<FilterData storeName={"module"} />}
+      filterData={<FilterData storeName={"linkMataKuliah"} />}
       dataBreadcrumbs={dataBreadcrumbs}
       clearParams={removeParams}
       checkboxSelection={true}
-      isCreate={false}
     />
   );
 }

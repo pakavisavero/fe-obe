@@ -7,6 +7,7 @@ import statusMahasiswa from "src/store/apps/master/statusMahasiswa";
 import dosen from "src/store/apps/master/dosen";
 import tahunAjaran from "src/store/apps/master/tahunAjaran";
 import docstatusPk from "src/store/apps/master/docstatusPk";
+import linkMataKuliah from "src/store/apps/master/linkMataKuliah";
 
 const masterReducer = {
   mahasiswa,
@@ -18,6 +19,7 @@ const masterReducer = {
   dosen,
   tahunAjaran,
   docstatusPk,
+  linkMataKuliah,
 };
 
 export default masterReducer;

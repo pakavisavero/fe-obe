@@ -30,6 +30,7 @@ const TableHeader = (props) => {
     storeName,
     templateFile,
     importFunction,
+    isCreate,
     exportName,
   } = props;
 
@@ -112,7 +113,7 @@ const TableHeader = (props) => {
             Refresh
           </Button>
 
-          {dinamic && !updateOnly && (
+          {isCreate && (
             <Link href={url} passHref>
               <Button
                 sx={{

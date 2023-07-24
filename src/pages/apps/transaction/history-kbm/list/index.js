@@ -21,7 +21,7 @@ import Translations from "src/layouts/components/Translations";
 
 import {
   clearResponse,
-  fetchData,
+  fetchDataHistoryKBM,
   handleParams,
   removeParams,
   updatePerkuliahan,
@@ -123,16 +123,6 @@ const FilterData = ({ storeName }) => {
   };
 
   const fields = [
-    {
-      name: "doc_status_id",
-      type: "autocomplete",
-      onChange: handleFilterAutoComplete("doc_status_id"),
-      label: "Next Step",
-      optLabel: "status",
-      data: _.sortBy(dataDocStatusPk, ["id"]),
-      xs: 12,
-      md: 4,
-    },
     {
       name: "dosen_id",
       type: "autocomplete",
@@ -300,7 +290,7 @@ function Index() {
       name: "id",
       type: "link",
       hide: true,
-      link: "/apps/transaction/perkuliahan/edit/",
+      link: "/apps/transaction/history-kbm/edit/",
       value: (value) => value.id,
       valueLink: (value) => value.id,
     },
@@ -309,7 +299,7 @@ function Index() {
       minWidth: 250,
       headerName: "Mata Kuliah",
       type: "link",
-      link: "/apps/transaction/perkuliahan/edit/",
+      link: "/apps/transaction/history-kbm/edit/",
       value: (value) =>
         value.mataKuliah.mata_kuliah ? value.mataKuliah.mata_kuliah : "-",
       valueLink: (value) => value.id,
@@ -317,7 +307,7 @@ function Index() {
     {
       name: "docstatus",
       minWidth: 250,
-      headerName: "Next Step",
+      headerName: "Status",
       type: "custom",
       renderCell: ({ row }) => (
         <Stack direction="row" alignItems="center" spacing={2}>
@@ -388,26 +378,25 @@ function Index() {
 
   const dataBreadcrumbs = [
     { name: <Translations text={"Transaction"} /> },
-    { name: "Perkuliahan" },
+    { name: "History KBM" },
   ];
 
   return (
     <ListData
       defaultColumns={defaultColumns}
-      nameLabel={`${t("Perkuliahan")}`}
+      nameLabel={`${t("History KBM")}`}
       storeName={"perkuliahan"}
-      updateData={updatePerkuliahan}
-      urlData={"/apps/transaction/perkuliahan/"}
-      getData={fetchData}
+      urlData={"/apps/transaction/history-kbm/"}
+      getData={fetchDataHistoryKBM}
       filterData={<FilterData storeName={"perkuliahan"} />}
       dataBreadcrumbs={dataBreadcrumbs}
       clearResponse={clearResponse}
       clearParams={removeParams}
       checkboxSelection={true}
-      importFunction={uploadPerkuliahan}
       exportName={"kbm-aktif"}
-      isImport
       isExport
+      isCreate={false}
+      redNotActive={false}
     />
   );
 }

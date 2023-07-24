@@ -124,7 +124,6 @@ const defaultValues = {
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [roles, setRoles] = useState([]);
-  const [selected, setSelected] = useState({});
   const [openModal, setOpenModal] = useState(false);
 
   const handleModalClickOpen = () => setOpenModal(true);
@@ -157,8 +156,6 @@ const LoginPage = () => {
     resolver: yupResolver(schema),
   });
 
-  console.log(getValues());
-
   const onSubmit = (data) => {
     const { email, password, role_id } = data;
     auth
@@ -166,14 +163,14 @@ const LoginPage = () => {
         toast.error(message);
       })
       .then((res) => {
-        console.log("res");
-        console.log(res);
+        // console.log("res");
+        // console.log(res);
         setRoles(res);
         setValue("role_id", res[0].id);
         handleModalClickOpen();
       })
       .catch((err) => {
-        console.log("masuk 2");
+        // console.log("masuk 2");
       });
   };
   const imageSource =
