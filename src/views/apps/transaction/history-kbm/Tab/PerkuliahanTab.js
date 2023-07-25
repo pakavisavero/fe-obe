@@ -338,15 +338,18 @@ const PerkuliahanTab = ({
   };
 
   const handleDownload = () => {
-    router.push(`http://127.0.0.1:8000/get-template/${id}`);
+    router.push(`${process.env.NEXT_PUBLIC_API_URL}get-template/${id}`);
   };
 
   const handleDownloadSIAP = () => {
-    router.push(`http://127.0.0.1:8000/get-form-siap/${id}`);
+    router.push(`${process.env.NEXT_PUBLIC_API_URL}get-form-siap/${id}`);
   };
 
   const handleOpenPortofolio = () => {
-    window.open(`http://127.0.0.1:8000/get-portofolio/${id}`, "_blank");
+    window.open(
+      `${process.env.NEXT_PUBLIC_API_URL}get-portofolio/${id}`,
+      "_blank"
+    );
   };
 
   return (

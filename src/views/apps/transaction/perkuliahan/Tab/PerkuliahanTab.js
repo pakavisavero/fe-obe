@@ -102,10 +102,13 @@ const PerkuliahanTab = ({
         dispatch(fetchDataDosen({ prodi_id: newValue.id }));
         dispatch(fetchDataMataKuliah({ prodi_id: newValue.id }));
       } else {
-        setValueData("mata_kuliah_id_name", { ["mata_kuliah"]: "" });
+        setValueData("mata_kuliah_id_name", {
+          ["kode_mk"]: "",
+          ["mata_kuliah"]: "",
+        });
         setValueData("mata_kuliah_id", "");
-        setValueData("dosen1_id_name", { ["full_name"]: "" });
-        setValueData("dosen1_id", "");
+        setValueData("dosen_id_name", { ["full_name"]: "" });
+        setValueData("dosen_id", "");
         setValueData("dosen2_id_name", { ["full_name"]: "" });
         setValueData("dosen2_id", "");
         setValueData("dosen3_id_name", { ["full_name"]: "" });
@@ -115,7 +118,7 @@ const PerkuliahanTab = ({
       }
     }
 
-    if (nameSplit[0] == "dosen1_id") {
+    if (nameSplit[0] == "dosen_id") {
       if (!newValue) {
         setValueData("dosen2_id_name", { ["full_name"]: "" });
         setValueData("dosen2_id", "");
@@ -151,7 +154,7 @@ const PerkuliahanTab = ({
   const getPJDosen = () => {
     return dataDosen.filter(
       (item) =>
-        item.id === watch("dosen1_id") ||
+        item.id === watch("dosen_id") ||
         item.id === watch("dosen2_id") ||
         item.id === watch("dosen3_id")
     );
@@ -181,8 +184,8 @@ const PerkuliahanTab = ({
       md: 4,
       data: _.sortBy(watch("prodi_id") ? dataMataKuliah : [], ["mata_kuliah"]),
       loading: loadingMataKuiah,
-      optLabel: "kode_mk",
-      optLabel2: "mata_kuliah",
+      optLabel: "mata_kuliah",
+      // optLabel2: "mata_kuliah",
       changeSearch: SearchhandleFilterAutoComplete(
         "mata_kuliah",
         fetchDataMataKuliah
@@ -191,8 +194,8 @@ const PerkuliahanTab = ({
       disabled: isEdit ? true : false,
     },
     {
-      key: "dosen1_id",
-      name: "dosen1_id_name",
+      key: "dosen_id",
+      name: "dosen_id_name",
       type: "autocomplete",
       label: "Dosen I",
       xs: 12,
@@ -201,7 +204,7 @@ const PerkuliahanTab = ({
       loading: loadingDosen,
       optLabel: "full_name",
       changeSearch: SearchhandleFilterAutoComplete("full_name", fetchDataDosen),
-      onChange: handleChangeAutoComplete("dosen1_id_name", "full_name"),
+      onChange: handleChangeAutoComplete("dosen_id_name", "full_name"),
     },
     {
       key: "dosen2_id",
@@ -211,8 +214,8 @@ const PerkuliahanTab = ({
       xs: 12,
       md: 4,
       data: _.sortBy(
-        watch("dosen1_id")
-          ? dataDosen.filter((item) => item.id != watch("dosen1_id"))
+        watch("dosen_id")
+          ? dataDosen.filter((item) => item.id != watch("dosen_id"))
           : [],
         ["full_name"]
       ),
@@ -232,7 +235,7 @@ const PerkuliahanTab = ({
         watch("dosen2_id")
           ? dataDosen.filter(
               (item) =>
-                item.id != watch("dosen1_id") && item.id != watch("dosen2_id")
+                item.id != watch("dosen_id") && item.id != watch("dosen2_id")
             )
           : [],
         ["full_name"]
@@ -370,15 +373,18 @@ const PerkuliahanTab = ({
   };
 
   const handleDownload = () => {
-    router.push(`http://127.0.0.1:8000/get-template/${id}`);
+    router.push(`${process.env.NEXT_PUBLIC_API_URL}get-template/${id}`);
   };
 
   const handleDownloadSIAP = () => {
-    router.push(`http://127.0.0.1:8000/get-form-siap/${id}`);
+    router.push(`${process.env.NEXT_PUBLIC_API_URL}get-form-siap/${id}`);
   };
 
   const handleOpenPortofolio = () => {
-    window.open(`http://127.0.0.1:8000/get-portofolio/${id}`, "_blank");
+    window.open(
+      `${process.env.NEXT_PUBLIC_API_URL}get-portofolio/${id}`,
+      "_blank"
+    );
   };
 
   return (

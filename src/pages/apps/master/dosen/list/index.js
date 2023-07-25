@@ -3,15 +3,11 @@ import {
   CircularProgress,
   FormControl,
   Grid,
-  styled,
-  TextField,
-  Typography,
   InputLabel,
   Select,
   MenuItem,
 } from "@mui/material";
 
-import Link from "next/link";
 import { useEffect, useState, forwardRef } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
@@ -29,11 +25,7 @@ import { fetchData as fetchDataProdi } from "src/store/apps/master/prodi";
 
 import ListData from "src/views/apps/ListData";
 import CardActionCollapse from "src/views/ui/cards/actions/CardActionCollapse";
-import { useDebounce } from "use-debounce";
 
-import DatePickerWrapper from "src/@core/styles/libs/react-datepicker";
-import DatePicker from "react-datepicker";
-import format from "date-fns/format";
 import { useDebouncedCallback } from "use-debounce";
 
 import { DrawColumn, DrawFilter, handleOnChangeRange } from "src/utils/field";
@@ -228,6 +220,7 @@ function Index() {
       checkboxSelection={true}
       exportName={"dosen"}
       isExport
+      isCreate={false}
     />
   );
 }

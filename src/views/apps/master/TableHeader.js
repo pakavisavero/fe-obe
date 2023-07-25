@@ -8,12 +8,13 @@ import ExportVariant from "mdi-material-ui/ExportVariant";
 import Import from "mdi-material-ui/Import";
 import Refresh from "mdi-material-ui/Refresh";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 
 import ImportDialog from "../ImportDialog";
 import { useRouter } from "next/router";
+import DialogDeactivate from "../transaction/perkuliahan/child/dialogDeactivate";
 
 const TableHeader = (props) => {
   // ** Props
@@ -25,18 +26,21 @@ const TableHeader = (props) => {
     updateOnly = false,
     isImport = false,
     isExport = false,
+    isDeactivate = false,
     checkboxMaster = false,
     params,
     storeName,
     templateFile,
     importFunction,
     isCreate,
+    datagrid,
     exportName,
   } = props;
 
   const router = useRouter();
 
   const [open, setOpen] = useState(false);
+  const [openDeactivate, setOpenDeactivate] = useState(false);
 
   const handleClose = () => setOpen(false);
   const handleOpen = () => setOpen(true);
@@ -54,11 +58,18 @@ const TableHeader = (props) => {
   };
 
   const handleDownload = async () => {
-    router.push(`http://127.0.0.1:8000/api/export/${exportName}`);
+    router.push(`${process.env.NEXT_PUBLIC_API_URL}export/${exportName}`);
   };
 
   return (
     <>
+      {openDeactivate && (
+        <DialogDeactivate
+          open={openDeactivate}
+          handleClose={() => setOpenDeactivate(false)}
+        />
+      )}
+
       <ImportDialog
         callback={callbackImport}
         templateFile={templateFile}
@@ -77,7 +88,7 @@ const TableHeader = (props) => {
         }}
       >
         <Box sx={{ display: "flex", flexWrap: "wrap", alignItems: "center" }}>
-          {dinamic && isExport && (
+          {dinamic && isExport && datagrid.length > 0 && (
             <Button
               sx={{ mr: 4, fontSize: 12 }}
               color="secondary"
@@ -98,6 +109,18 @@ const TableHeader = (props) => {
               onClick={handleOpen}
             >
               Import
+            </Button>
+          )}
+
+          {dinamic && isDeactivate && datagrid.length > 0 && (
+            <Button
+              sx={{ mr: 4, fontSize: 12 }}
+              color="secondary"
+              variant="outlined"
+              startIcon={<ExportVariant fontSize="small" />}
+              onClick={() => setOpenDeactivate(true)}
+            >
+              Non-Aktifkan Perkuliahan
             </Button>
           )}
         </Box>

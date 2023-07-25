@@ -28,8 +28,10 @@ const Edit = ({ data }) => {
       defaultValues={data}
       ContentForm={ContentForm}
       clearResponse={clearResponse}
-      isEdit
       dataBreadcrumbs={dataBreadcrumbs}
+      isEdit
+      withSave={false}
+      withBack={false}
     />
   );
 };
@@ -50,6 +52,14 @@ export const getServerSideProps = async ({ params, req, res }) => {
         id: params?.id,
         data: {
           ...response.data.data,
+          mata_kuliah_id_name: {
+            kode_mk: response.data.data.mataKuliah.kode_mk,
+            mata_kuliah: response.data.data.mataKuliah.mata_kuliah,
+          },
+          mapping_id_name: {
+            kode_mk: response.data.data.mapping.kode_mk,
+            mata_kuliah: response.data.data.mapping.mata_kuliah,
+          },
         },
       },
     };

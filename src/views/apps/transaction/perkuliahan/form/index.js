@@ -30,10 +30,7 @@ import MahasiswaTab from '../Tab/MahasiswaTab'
 import EvaluasiTab from '../Tab/EvaluasiTab'
 import StatistikTab from '../Tab/StatistikTab'
 
-// ** Icons Imports
 import AccountOutline from 'mdi-material-ui/AccountOutline'
-import AccountTieOutline from 'mdi-material-ui/AccountTieOutline'
-import MapMarkerOutline from 'mdi-material-ui/MapMarkerOutline'
 import ChartDonut from 'mdi-material-ui/ChartDonut'
 import FileDocumentOutline from 'mdi-material-ui/FileDocumentOutline'
 import ArchiveOutline from 'mdi-material-ui/ArchiveOutline'

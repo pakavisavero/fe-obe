@@ -17,7 +17,7 @@ import { fetchData as fetchDataMataKuliah } from "src/store/apps/master/mataKuli
 
 import _ from "lodash";
 
-const Index = ({ control, errors, setValue }) => {
+const Index = ({ control, errors, setValue, isEdit }) => {
   const dispatch = useDispatch();
 
   const { data: dataMataKuliah, loading: loadingMataKuliah } = useSelector(
@@ -56,6 +56,7 @@ const Index = ({ control, errors, setValue }) => {
         "mata_kuliah",
         "kode_mk"
       ),
+      disabled: isEdit ? true : false,
     },
     {
       key: "mapping_id",
@@ -73,6 +74,7 @@ const Index = ({ control, errors, setValue }) => {
         "mata_kuliah",
         "kode_mk"
       ),
+      disabled: isEdit ? true : false,
     },
   ];
 

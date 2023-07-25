@@ -1,17 +1,4 @@
-import {
-  Autocomplete,
-  CircularProgress,
-  FormControl,
-  Grid,
-  styled,
-  TextField,
-  Typography,
-  InputLabel,
-  Select,
-  MenuItem,
-  Stack,
-  Box,
-} from "@mui/material";
+import { Grid, Stack, Box } from "@mui/material";
 
 import Link from "next/link";
 import { useEffect, useState, forwardRef } from "react";
@@ -36,11 +23,7 @@ import { fetchDataOption as fetchDataDocStatusPk } from "src/store/apps/master/d
 
 import ListData from "src/views/apps/ListData";
 import CardActionCollapse from "src/views/ui/cards/actions/CardActionCollapse";
-import { useDebounce } from "use-debounce";
 
-import DatePickerWrapper from "src/@core/styles/libs/react-datepicker";
-import DatePicker from "react-datepicker";
-import format from "date-fns/format";
 import { useDebouncedCallback } from "use-debounce";
 
 import {
@@ -408,6 +391,7 @@ function Index() {
       exportName={"kbm-aktif"}
       isImport
       isExport
+      isDeactivate
     />
   );
 }

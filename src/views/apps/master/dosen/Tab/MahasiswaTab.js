@@ -1,29 +1,10 @@
-import {
-    CardContent,
-    FormControl,
-    FormHelperText,
-    Grid,
-    InputLabel,
-    MenuItem,
-    Select,
-    TextField,
-    Button,
-    Divider,
-} from '@mui/material'
+import React from "react";
 
-import { Controller } from 'react-hook-form'
-import { DrawField } from 'src/utils/field'
+import _ from "lodash";
+import Mahasiswa from "../child/mahasiswa";
 
-import { useDispatch, useSelector } from 'react-redux'
-import React, { useEffect, useState } from 'react'
+const MahasiswaTab = ({ store, control }) => {
+  return <Mahasiswa control={control} store={store} />;
+};
 
-import _ from 'lodash'
-import Mahasiswa from '../child/mahasiswa'
-
-const MahasiswaTab = ({ watch, store, control, errors, isEdit, setValue }) => {
-    return (
-        <Mahasiswa control={control} store={store} />
-    )
-}
-
-export default MahasiswaTab
+export default MahasiswaTab;

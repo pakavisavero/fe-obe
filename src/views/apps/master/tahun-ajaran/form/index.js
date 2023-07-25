@@ -6,44 +6,69 @@ import {
   InputLabel,
   MenuItem,
   Select,
-  TextField
-} from '@mui/material'
+  TextField,
+} from "@mui/material";
 
-import { Controller } from 'react-hook-form'
-import { DrawField } from 'src/utils/field'
+import { DrawField } from "src/utils/field";
+import React, { useEffect, useState } from "react";
 
-import { useDispatch, useSelector } from 'react-redux'
-import React, { useEffect, useState } from 'react'
+import _ from "lodash";
 
-import _ from 'lodash'
+const Index = ({ control, errors, watch, setValue, isEdit }) => {
+  const handleChangeName = (e) => {
+    const name = e.target.value;
+    if (name) {
+      setValue("name", name.toString());
+      setValue(
+        "tahun_ajaran",
+        name.toString() + "/" + (parseInt(name) + 1).toString()
+      );
+    } else {
+      setValue("name", "");
+      setValue("tahun_ajaran", "");
+    }
+  };
 
-const Index = ({ control, errors }) => {
   const fields = [
     {
-      name: 'tahun_ajaran',
-      type: 'text',
-      label: 'Tahun Ajaran',
+      name: "name",
+      type: "number",
+      label: "Nama",
       xs: 12,
-      md: 4
+      md: 4,
+      onChange: (e) => handleChangeName(e),
+      helperText: true,
+      helperMessage: "[Hanya tahun, e.g. 2022]",
     },
     {
-      name: 'is_active',
-      type: 'select',
-      label: 'Status',
+      name: "tahun_ajaran",
+      type: "text",
+      label: "Tahun Ajaran",
+      xs: 12,
+      md: 4,
+      disabled: true,
+    },
+  ];
+
+  if (isEdit) {
+    fields.push({
+      name: "is_active",
+      type: "select",
+      label: "Status",
       xs: 12,
       md: 4,
       opt: [
         {
           value: true,
-          label: 'Active'
+          label: "Active",
         },
         {
           value: false,
-          label: 'Inactive'
-        }
-      ]
-    }
-  ]
+          label: "Inactive",
+        },
+      ],
+    });
+  }
 
   return (
     <CardContent>
@@ -51,7 +76,7 @@ const Index = ({ control, errors }) => {
         {fields.map((field, key) => DrawField(field, errors, control, key))}
       </Grid>
     </CardContent>
-  )
-}
+  );
+};
 
-export default Index
+export default Index;

@@ -1,17 +1,17 @@
 // ** React Imports
-import { yupResolver } from '@hookform/resolvers/yup'
+import { yupResolver } from "@hookform/resolvers/yup";
 
 // ** MUI Imports
-import Card from '@mui/material/Card'
-import Grid from '@mui/material/Grid'
-import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
-import { useForm } from 'react-hook-form'
-import toast from 'react-hot-toast'
-import { useDispatch, useSelector } from 'react-redux'
-import { fetchData } from 'src/store/apps/user'
-import Breadcrumbs from './Breadcrumbs'
-import AddActions from './master/AddActions'
+import Card from "@mui/material/Card";
+import Grid from "@mui/material/Grid";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchData } from "src/store/apps/user";
+import Breadcrumbs from "./Breadcrumbs";
+import AddActions from "./master/AddActions";
 
 const FormData = ({
   urlData,
@@ -26,20 +26,20 @@ const FormData = ({
   dataBreadcrumbs,
   withBack = true,
   withSave = true,
-  withDocStatus = false
+  withDocStatus = false,
 }) => {
-  const router = useRouter()
-  const [back, setBack] = useState(true)
-  const [updatePage, setUpdatePage] = useState(false)
-  const { id } = router.query
+  const router = useRouter();
+  const [back, setBack] = useState(true);
+  const [updatePage, setUpdatePage] = useState(false);
+  const { id } = router.query;
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  const store = useSelector(state => state[storeName])
-  const { currentId, loading, message, error } = store
+  const store = useSelector((state) => state[storeName]);
+  const { currentId, loading, message, error } = store;
 
-  const URL_PREV = `${urlData}list/`
-  const URL_NEXT = `${urlData}edit/${currentId}/`
+  const URL_PREV = `${urlData}list/`;
+  const URL_NEXT = `${urlData}edit/${currentId}/`;
 
   // ** Hook
   const {
@@ -52,83 +52,97 @@ const FormData = ({
     clearErrors,
     formState: { errors },
     register,
-    getValues
+    getValues,
   } = useForm({
     resolver: yupResolver(yupSchema),
-    defaultValues
-  })
+    defaultValues,
+  });
 
-  const defaultSubmit = async data => {
+  const defaultSubmit = async (data) => {
+    console.log("entry 1../");
     if (isEdit) {
-      dispatch(updateFunc(data))
+      dispatch(updateFunc(data));
     } else {
-      dispatch(saveFunc(data))
+      dispatch(saveFunc(data));
     }
-  }
+  };
 
-  const defaultSubmitBack = async data => {
+  const defaultSubmitBack = async (data) => {
+    console.log("entry 2../");
     if (isEdit) {
-      dispatch(updateFunc(data))
+      dispatch(updateFunc(data));
     } else {
-      dispatch(saveFunc(data))
+      dispatch(saveFunc(data));
     }
-    router.replace(URL_PREV)
-  }
+    if (!error) router.replace(URL_PREV);
+  };
 
-  const defaultSubmitRedirect = async data => {
+  const defaultSubmitRedirect = async (data) => {
+    console.log("entry 3../");
     if (isEdit) {
-      dispatch(updateFunc(data))
+      dispatch(updateFunc(data));
     } else {
-      dispatch(saveFunc(data))
+      dispatch(saveFunc(data));
     }
-    setBack(false)
-    setUpdatePage(true)
-    // router.replace(router.asPath)
-  }
+    setBack(false);
+    setUpdatePage(true);
+    router.replace(router.asPath);
+  };
 
   const actionSaveback = () => {
-    handleSubmit(defaultSubmitBack)()
-  }
+    console.log("entry 4../");
+    handleSubmit(defaultSubmitBack)();
+  };
+
   const ActionSave = async () => {
-    handleSubmit(defaultSubmitRedirect)()
-  }
+    handleSubmit(defaultSubmitRedirect)();
+  };
 
   const ActionBack = () => {
-    router.replace(URL_PREV)
-  }
+    router.replace(URL_PREV);
+  };
 
-  const ActionSaveNew = async e => {
-    e.preventDefault()
-    handleSubmit(defaultSubmit)()
-    reset()
-  }
+  const ActionSaveNew = async (e) => {
+    e.preventDefault();
+    handleSubmit(defaultSubmit)();
+    reset();
+  };
 
   useEffect(() => {
-    reset(defaultValues)
-  }, [defaultValues])
+    reset(defaultValues);
+  }, [defaultValues]);
 
   useEffect(() => {
     if (currentId && !back) {
-      router.replace(URL_NEXT)
+      router.replace(URL_NEXT);
     }
-  }, [currentId, back])
+  }, [currentId, back]);
 
   useEffect(() => {
-    if (message) toast.success(message)
-    if (error) toast.error(error)
-    if (clearResponse) dispatch(clearResponse())
-  }, [message, error, currentId, back])
+    if (message) toast.success(message);
+    if (error) toast.error(error);
+    if (clearResponse) dispatch(clearResponse());
+  }, [message, error, currentId, back]);
 
   useEffect(() => {
     if (message && id && updatePage) {
-      router.replace(router.asPath)
+      router.replace(router.asPath);
     }
-  }, [message, id, updatePage])
+  }, [message, id, updatePage]);
 
   return (
-    <Grid container spacing={6} component={'form'} onSubmit={handleSubmit(defaultSubmit)}>
+    <Grid
+      container
+      spacing={6}
+      component={"form"}
+      onSubmit={handleSubmit(defaultSubmit)}
+    >
       <Grid item xs={12}>
-        <Breadcrumbs data={dataBreadcrumbs} withDocStatus={withDocStatus} value={watch('docstatus')} />
+        <Breadcrumbs
+          data={dataBreadcrumbs}
+          withDocStatus={withDocStatus}
+          value={watch("docstatus")}
+        />
       </Grid>
       <Grid item xs={12}>
         <AddActions
@@ -137,6 +151,7 @@ const FormData = ({
           ActionSave={ActionSave}
           ActionBack={ActionBack}
           ActionSaveNew={ActionSaveNew}
+          isEdit={isEdit}
           withBack={withBack}
           withSave={withSave}
         />
@@ -159,6 +174,6 @@ const FormData = ({
         </Card>
       </Grid>
     </Grid>
-  )
-}
-export default FormData
+  );
+};
+export default FormData;

@@ -117,9 +117,13 @@ export const mahasiswasSlice = createSlice({
       state.loading = true;
     });
     builder.addCase(addMahasiswa.fulfilled, (state, action) => {
-      state.loading = false;
-      state.message = action.payload.message;
-      state.currentId = action.payload.data.id;
+      if (action.payload.code !== 200) {
+        state.error = action.payload.message;
+      } else {
+        state.loading = false;
+        state.message = action.payload.message;
+        state.currentId = action.payload.data.id;
+      }
     });
     builder.addCase(addMahasiswa.rejected, (state, action) => {
       state.loading = false;
@@ -130,9 +134,13 @@ export const mahasiswasSlice = createSlice({
       state.loading = true;
     });
     builder.addCase(updateMahasiswa.fulfilled, (state, action) => {
-      state.loading = false;
-      state.message = action.payload.message;
-      state.currentId = action.payload.data.id;
+      if (action.payload.code !== 200) {
+        state.error = action.payload.message;
+      } else {
+        state.loading = false;
+        state.message = action.payload.message;
+        state.currentId = action.payload.data.id;
+      }
     });
     builder.addCase(updateMahasiswa.rejected, (state, action) => {
       state.loading = false;

@@ -1,59 +1,26 @@
 import {
-    Box,
     CardContent,
-    IconButton,
-    Tooltip,
-    Typography,
     Button
 } from '@mui/material'
 
-import DeleteOutline from 'mdi-material-ui/DeleteOutline'
-import EyeOutline from 'mdi-material-ui/EyeOutline'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-
 import { DataGrid } from '@mui/x-data-grid'
-import 'react-datepicker/dist/react-datepicker.css'
 import { useFieldArray } from 'react-hook-form'
-import Translations from 'src/layouts/components/Translations'
-import SideBarChild from 'src/views/apps/SideBarMultiChild'
-import TableHeader from 'src/views/apps/TableHeader'
+
+import 'react-datepicker/dist/react-datepicker.css'
 
 function Mahasiswa({ control, store }) {
     const [pageSize, setPageSize] = useState(10)
-
     const dispatch = useDispatch()
-
-    const toggleAddDrawer = () => {
-        dispatch(openModal())
-    }
-    const toggleUpdateDrawer = row => () => {
-        const indexData = fields.findIndex(f => f.id == row.id)
-        dispatch(selectChild({ ...row, index: indexData }))
-    }
 
     const { fields, append, remove, update } = useFieldArray({
         control,
         name: 'mahasiswa'
     })
 
-    const handleAdd = data => {
-        append(data)
-        handleCloseModal()
-    }
-
-    const handleUpdate = (idx, data) => {
-        update(idx, data)
-        handleCloseModal()
-    }
-
     const handleCloseModal = () => {
         dispatch(closeModal())
-    }
-
-    const handleRemove = index => () => {
-        const idx = fields.findIndex(f => f.branch === index)
-        remove(idx)
     }
 
     const defaultColumns = [

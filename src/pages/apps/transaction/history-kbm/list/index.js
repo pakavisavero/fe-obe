@@ -393,7 +393,7 @@ function Index() {
       clearResponse={clearResponse}
       clearParams={removeParams}
       checkboxSelection={true}
-      exportName={"kbm-aktif"}
+      exportName={"history-kbm"}
       isExport
       isCreate={false}
       redNotActive={false}

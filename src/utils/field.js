@@ -17,16 +17,23 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+
 import ChevronDown from "mdi-material-ui/ChevronDown";
 import ChevronUp from "mdi-material-ui/ChevronUp";
 import Link from "next/link";
 import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+
 import { Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
+
 import CustomInput, { CustomInputTwo } from "src/@core/components/CustomInput";
 import DatePickerWrapper from "src/@core/styles/libs/react-datepicker";
 import Translations from "src/layouts/components/Translations";
+
+import EyeOutline from "mdi-material-ui/EyeOutline";
+import EyeOffOutline from "mdi-material-ui/EyeOffOutline";
+
+import "react-datepicker/dist/react-datepicker.css";
 
 const StyledLink = styled("a")(({ theme }) => ({
   textDecoration: "none",
@@ -34,8 +41,17 @@ const StyledLink = styled("a")(({ theme }) => ({
 }));
 
 export const DrawField = (field, errors, control, key) => {
-  if (["text", "email", "number"].includes(field.type)) {
+  if (["text", "email", "number", "password"].includes(field.type)) {
     const defaultValueNumber = () => (field.defaultQty ? 1 : "");
+
+    const getType = () => {
+      if (field.type === "password") {
+        if (field.visibility) return "password";
+        return "text";
+      }
+
+      return field.type;
+    };
 
     return (
       !field.hidden && (
@@ -48,10 +64,9 @@ export const DrawField = (field, errors, control, key) => {
               readOnly={field.readOnly}
               render={({ field: { value, onChange } }) => (
                 <TextField
-                  InputProps={field.typeParam}
                   label={<Translations text={field.label} />}
                   value={value ?? defaultValueNumber()}
-                  type={field.type}
+                  type={getType()}
                   variant="outlined"
                   onChange={field.onChange ?? onChange}
                   error={Boolean(errors[field.name])}
@@ -60,9 +75,36 @@ export const DrawField = (field, errors, control, key) => {
                   rows={field.rows}
                   multiline={field.multiline}
                   helperText={field.helperText}
+                  InputProps={{
+                    ...field.typeParam,
+                    autoComplete: "new-password",
+                    endAdornment:
+                      field.type == "password" ? (
+                        <InputAdornment position="end">
+                          <IconButton
+                            edge="end"
+                            onClick={() => field.handleVisibility(field.name)}
+                            aria-label="toggle password visibility"
+                          >
+                            {field.visibility ? (
+                              <EyeOutline />
+                            ) : (
+                              <EyeOffOutline />
+                            )}
+                          </IconButton>
+                        </InputAdornment>
+                      ) : (
+                        <div></div>
+                      ),
+                  }}
                 />
               )}
             />
+            {field.helperText && (
+              <FormHelperText>
+                <Translations text={field.helperMessage} />
+              </FormHelperText>
+            )}
             {errors[field.name] && (
               <FormHelperText sx={{ color: "error.main" }}>
                 <Translations text={errors[field.name].message} />
@@ -443,6 +485,7 @@ export const DrawColumn = (field) => {
     minWidth: field.minWidth,
     headerName: t(field.headerName),
   };
+  
   if (field.type === "link") {
     obj.renderCell = ({ row }) => (
       <Link href={`${field.link}${field.valueLink(row)}`} passHref>

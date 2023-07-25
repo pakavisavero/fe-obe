@@ -1,18 +1,18 @@
-import { CardContent, FormControl, FormHelperText, Grid, InputLabel, MenuItem, Select, TextField } from '@mui/material'
-import { Controller } from 'react-hook-form'
-import { DrawField } from 'src/utils/field'
+import { CardContent, Grid } from "@mui/material";
+import { Controller } from "react-hook-form";
+import { DrawField } from "src/utils/field";
 
-import { useDispatch, useSelector } from 'react-redux'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from "react";
+import { fetchData as fetchDataModuleGroup } from "src/store/apps/setting/moduleGroup";
 
-import { fetchData as fetchDataModuleGroup } from 'src/store/apps/setting/moduleGroup'
-
-import _ from 'lodash'
+import _ from "lodash";
 
 const Index = ({ control, errors, setValue }) => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  const { data: dataModuleGroup, loading: loadingModuleGroup } = useSelector(state => state.moduleGroup)
+  const { data: dataModuleGroup, loading: loadingModuleGroup } = useSelector(
+    (state) => state.moduleGroup
+  );
 
   const defaultParam = {
     is_active: true,
@@ -20,59 +20,59 @@ const Index = ({ control, errors, setValue }) => {
   };
 
   useEffect(() => {
-    dispatch(fetchDataModuleGroup({ is_active: true }))
-  }, [dispatch])
-
+    dispatch(fetchDataModuleGroup({ is_active: true }));
+  }, [dispatch]);
 
   const handleChangeAutoComplete = (name, opt) => (event, newValue) => {
-    const nameSplit = name.split('_name')
+    const nameSplit = name.split("_name");
     if (newValue) {
-      setValue(name, newValue)
-      setValue(nameSplit[0], newValue.id)
+      setValue(name, newValue);
+      setValue(nameSplit[0], newValue.id);
     } else {
-      setValue(name, { [opt]: '' })
-      setValue(nameSplit[0], '')
+      setValue(name, { [opt]: "" });
+      setValue(nameSplit[0], "");
     }
-  }
+  };
 
   const fields = [
     {
-      name: 'module_name',
-      type: 'text',
-      label: 'Module Name',
-      xs: 12,
-      md: 4
-    },
-    {
-      key: 'module_group_id',
-      name: 'module_group_id_name',
-      type: 'autocomplete',
-      label: 'Module Group',
+      name: "module_name",
+      type: "text",
+      label: "Module Name",
       xs: 12,
       md: 4,
-      data: _.sortBy(dataModuleGroup, ['module_name']),
-      loading: loadingModuleGroup,
-      optLabel: 'module_name',
-      onChange: handleChangeAutoComplete('module_group_id_name', 'module_name'),
     },
     {
-      name: 'is_active',
-      type: 'select',
-      label: 'Status',
+      key: "module_group_id",
+      name: "module_group_id_name",
+      type: "autocomplete",
+      label: "Module Group",
+      xs: 12,
+      md: 4,
+      data: _.sortBy(dataModuleGroup, ["module_name"]),
+      loading: loadingModuleGroup,
+      optLabel: "module_name",
+      onChange: handleChangeAutoComplete("module_group_id_name", "module_name"),
+      disabled: true,
+    },
+    {
+      name: "is_active",
+      type: "select",
+      label: "Status",
       xs: 12,
       md: 4,
       opt: [
         {
           value: true,
-          label: 'Active'
+          label: "Active",
         },
         {
           value: false,
-          label: 'Inactive'
-        }
-      ]
-    }
-  ]
+          label: "Inactive",
+        },
+      ],
+    },
+  ];
 
   return (
     <CardContent>
@@ -80,7 +80,7 @@ const Index = ({ control, errors, setValue }) => {
         {fields.map((field, key) => DrawField(field, errors, control, key))}
       </Grid>
     </CardContent>
-  )
-}
+  );
+};
 
-export default Index
+export default Index;

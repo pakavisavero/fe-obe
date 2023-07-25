@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+
 import {
   Chart as ChartJS,
   ArcElement,
@@ -12,13 +13,8 @@ import {
   LineElement,
 } from "chart.js";
 
-import { Doughnut, Pie } from "react-chartjs-2";
-import { CogSyncOutline } from "mdi-material-ui";
-import { Scatter } from "react-chartjs-2";
-
 import ChartDataLabels from "chartjs-plugin-datalabels";
 import { Bar } from "react-chartjs-2";
-import { options } from "numeral";
 
 const GraphicAssessment = ({
   title,

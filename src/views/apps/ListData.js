@@ -1,31 +1,21 @@
 import { Box, LinearProgress } from "@mui/material";
 import Card from "@mui/material/Card";
-import FormControlLabel from "@mui/material/FormControlLabel";
 import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
-import Switch from "@mui/material/Switch";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import { DataGrid } from "@mui/x-data-grid";
 import EyeOutline from "mdi-material-ui/EyeOutline";
 
-// ** Next Import
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 
-// ** Third Party Styles Imports
-
-// ** Store & Actions Imports
 import { useDispatch, useSelector } from "react-redux";
-import { fDateTimeSuffix, fDateSuffixExport } from "src/@core/utils/format";
+import { fDateTimeSuffix } from "src/@core/utils/format";
 import TableHeader from "src/views/apps/master/TableHeader";
 import Breadcrumbs from "./Breadcrumbs";
 import { useSettings } from "src/@core/hooks/useSettings";
-
-// ** Styled Components
-
-// ** Styled component for the link in the dataTable
 
 /* eslint-enable */
 const ListData = ({
@@ -42,6 +32,7 @@ const ListData = ({
   withFlag = true,
   isImport = false,
   isExport = false,
+  isDeactivate = false,
   actionExport = () => {},
   clearParams,
   updateOnly = false,
@@ -254,12 +245,14 @@ const ListData = ({
             updateOnly={updateOnly}
             isImport={isImport}
             isExport={isExport}
+            isDeactivate={isDeactivate}
             isCreate={isCreate}
             params={params}
             storeName={storeName}
             exportName={exportName}
             templateFile={templateFile}
             importFunction={importFunction}
+            datagrid={datagrid}
           />
 
           <DataGrid

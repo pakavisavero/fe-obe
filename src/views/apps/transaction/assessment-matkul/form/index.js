@@ -2,29 +2,24 @@ import { CardContent, Grid, Button, Divider, Box, Card } from "@mui/material";
 
 import React, { useEffect, useState } from "react";
 
-// ** MUI Imports
-import Typography from "@mui/material/Typography";
-
-import _ from "lodash";
-
 import { DataGrid, GridRowParams } from "@mui/x-data-grid";
-import axios from "src/configs/AxiosSetting";
-
 import { useDispatch, useSelector } from "react-redux";
 import { DrawColumn, DrawFilter, DrawField } from "src/utils/field";
 
+import Typography from "@mui/material/Typography";
 import DialogSelected from "../child/dialogSelected";
 import CardActionCollapse from "src/views/ui/cards/actions/CardActionCollapse";
 import Translations from "src/layouts/components/Translations";
+import axios from "src/configs/AxiosSetting";
+import GraphicAssessment from "../child/graphicAssessment";
 
 import { fetchDataOption as fetchDataTahunAjaran } from "src/store/apps/master/tahunAjaran";
 import { fetchDataOption as fetchDataMataKuliah } from "src/store/apps/master/mataKuliah";
-
-import GraphicAssessment from "../child/graphicAssessment";
-
 import { getCookie } from "cookies-next";
+
 import qs from "qs";
 import toast from "react-hot-toast";
+import _ from "lodash";
 
 const Index = ({ control, errors, data, setValue, watch, isEdit }) => {
   const dispatch = useDispatch();
@@ -119,7 +114,6 @@ const Index = ({ control, errors, data, setValue, watch, isEdit }) => {
         if (exLabelCpl.length < 1) {
           labelCplList.push(cpl.name);
         }
-        console.log(cpl);
         tempCpl.push(cpl);
       }
       cplList.push(tempCpl.map((item) => item.value.toFixed(2)));

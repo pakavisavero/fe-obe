@@ -169,22 +169,29 @@ export const usersSlice = createSlice({
       state.loading = true;
     });
     builder.addCase(addUser.fulfilled, (state, action) => {
-      state.loading = false;
-      state.message = action.payload.message;
-      state.currentId = action.payload.data.id;
+       if (action.payload.code !== 200) {
+         state.error = action.payload.message;
+       } else {
+         state.loading = false;
+         state.message = action.payload.message;
+         state.currentId = action.payload.data.id;
+       }
     });
     builder.addCase(addUser.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload.message;
     });
-
     builder.addCase(updateUser.pending, (state) => {
       state.loading = true;
     });
     builder.addCase(updateUser.fulfilled, (state, action) => {
-      state.loading = false;
-      state.message = action.payload.message;
-      state.currentId = action.payload.data.id;
+      if (action.payload.code !== 200) {
+        state.error = action.payload.message;
+      } else {
+        state.loading = false;
+        state.message = action.payload.message;
+        state.currentId = action.payload.data.id;
+      }
     });
     builder.addCase(updateUser.rejected, (state, action) => {
       state.loading = false;

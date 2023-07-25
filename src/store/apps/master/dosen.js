@@ -6,54 +6,10 @@ export const fetchData = createAsyncThunk(
   "dosen/fetchData",
   async (params, { rejectWithValue }) => {
     try {
-      const response = await axios.get("/dosens", {
+      const response = await axios.get("users", {
         params,
         paramsSerializer: (params) => qs.stringify(params),
       });
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(error.response.data);
-    }
-  }
-);
-
-export const addDosen = createAsyncThunk(
-  "dosen/addDosen",
-  async (data, { getState, dispatch, rejectWithValue }) => {
-    try {
-      const config = {
-        method: "post",
-        url: "user",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        data: data,
-      };
-      const response = await axios(config);
-      dispatch(fetchData(getState().dosen.params));
-
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(error.response.data);
-    }
-  }
-);
-
-export const updateDosen = createAsyncThunk(
-  "dosen/updateDosen",
-  async (data, { getState, dispatch, rejectWithValue }) => {
-    try {
-      const config = {
-        method: "put",
-        url: "user",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        data: data,
-      };
-      const response = await axios(config);
-      dispatch(fetchData(getState().dosen.params));
-
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -72,6 +28,8 @@ export const dosensSlice = createSlice({
     currentId: null,
     total: 0,
     params: {
+      is_dosen: true,
+      is_active: true,
       created_at: [],
     },
   },
@@ -103,30 +61,6 @@ export const dosensSlice = createSlice({
       }
     });
     builder.addCase(fetchData.rejected, (state, action) => {
-      state.loading = false;
-      state.error = action.payload.message;
-    });
-    builder.addCase(addDosen.pending, (state) => {
-      state.loading = true;
-    });
-    builder.addCase(addDosen.fulfilled, (state, action) => {
-      state.loading = false;
-      state.message = action.payload.message;
-      state.currentId = action.payload.data.id;
-    });
-    builder.addCase(addDosen.rejected, (state, action) => {
-      state.loading = false;
-      state.error = action.payload.message;
-    });
-    builder.addCase(updateDosen.pending, (state) => {
-      state.loading = true;
-    });
-    builder.addCase(updateDosen.fulfilled, (state, action) => {
-      state.loading = false;
-      state.message = action.payload.message;
-      state.currentId = action.payload.data.id;
-    });
-    builder.addCase(updateDosen.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload.message;
     });

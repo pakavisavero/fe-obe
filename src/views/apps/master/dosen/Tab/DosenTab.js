@@ -12,7 +12,6 @@ const MahasiswaTab = ({ control, errors }) => {
     const dispatch = useDispatch()
 
     const { data: dataProdi, loading: loadingProdi } = useSelector(state => state.prodi)
-
     const defaultParam = {
         is_active: true,
         is_paging: false,

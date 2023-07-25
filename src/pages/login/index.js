@@ -184,7 +184,6 @@ const LoginPage = () => {
         <Dialog
           open={openModal}
           maxWidth="xs"
-          fullWidth={true}
           onClose={handleModalClose}
           sx={{ maxWidth: "100%" }}
         >
@@ -199,32 +198,30 @@ const LoginPage = () => {
             Select Role
           </DialogTitle>
           <DialogContent>
-            <Grid container spacing={6}>
-              {roles.map((role) => (
-                <Grid item sm={6} xs={12}>
-                  <Box
-                    onClick={() => setValue("role_id", role.id)}
-                    sx={{
-                      py: 2,
-                      px: 4,
-                      borderRadius: 1,
-                      cursor: "pointer",
-                      border: (theme) =>
-                        `1px solid ${
-                          watch("role_id") === role.id
-                            ? theme.palette.primary.main
-                            : theme.palette.divider
-                        }`,
-                      ...(watch("role_id") === role.id
-                        ? { ...bgClasses.primaryLight }
-                        : { backgroundColor: "action.hover" }),
-                    }}
-                  >
-                    {role.role_name}
-                  </Box>
-                </Grid>
-              ))}
-            </Grid>
+            {roles.map((role) => (
+              <Grid item sm={6} xs={12} sx={{ mb: 3 }}>
+                <Box
+                  onClick={() => setValue("role_id", role.id)}
+                  sx={{
+                    py: 2,
+                    px: 4,
+                    borderRadius: 1,
+                    cursor: "pointer",
+                    border: (theme) =>
+                      `1px solid ${
+                        watch("role_id") === role.id
+                          ? theme.palette.primary.main
+                          : theme.palette.divider
+                      }`,
+                    ...(watch("role_id") === role.id
+                      ? { ...bgClasses.primaryLight }
+                      : { backgroundColor: "action.hover" }),
+                  }}
+                >
+                  {role.role_name}
+                </Box>
+              </Grid>
+            ))}
           </DialogContent>
           <DialogActions sx={{ justifyContent: "left", mt: 4 }}>
             <Button
@@ -486,13 +483,13 @@ const LoginPage = () => {
                     justifyContent: "space-between",
                   }}
                 >
-                  <FormControlLabel
+                  {/* <FormControlLabel
                     control={<Checkbox />}
                     label="Remember Me"
                   />
                   <Link passHref href="/forgot-password">
                     <LinkStyled>Forgot Password?</LinkStyled>
-                  </Link>
+                  </Link> */}
                 </Box>
 
                 <Button
@@ -500,7 +497,7 @@ const LoginPage = () => {
                   size="large"
                   type="submit"
                   variant="contained"
-                  sx={{ mb: 7 }}
+                  sx={{ mb: 7, mt: 4 }}
                 >
                   Login
                 </Button>

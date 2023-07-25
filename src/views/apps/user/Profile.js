@@ -8,35 +8,20 @@ import {
   Button,
   Card,
   CardHeader,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
   FormControl,
   InputLabel,
   OutlinedInput,
   InputAdornment,
   IconButton,
   FormHelperText,
-  DialogContentText,
-  TextField,
-  Select,
-  MenuItem,
-  FormControlLabel,
-  Switch,
 } from "@mui/material";
 
 import CustomChip from "src/@core/components/mui/chip";
-import CustomAvatar from "src/@core/components/mui/avatar";
-import Check from "mdi-material-ui/Check";
-import BriefcaseVariantOutline from "mdi-material-ui/BriefcaseVariantOutline";
 import EyeOutline from "mdi-material-ui/EyeOutline";
 import EyeOffOutline from "mdi-material-ui/EyeOffOutline";
-import DeleteOutline from "mdi-material-ui/DeleteOutline";
-import SquareEditOutline from "mdi-material-ui/SquareEditOutline";
+
 import { useDispatch, useSelector } from "react-redux";
 
-import { styled } from "@mui/material/styles";
 import MuiAvatar from "@mui/material/Avatar";
 import Translations from "src/layouts/components/Translations";
 
@@ -130,7 +115,6 @@ const Profile = () => {
   const handleOnChange = (e) => {
     const { name, value } = e.target;
     setValue(name, value);
-    console.log(getValues());
   };
 
   const handleUpdatePassword = async (data) => {

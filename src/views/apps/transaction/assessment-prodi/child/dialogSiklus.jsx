@@ -1,21 +1,4 @@
-import {
-  CardContent,
-  FormControl,
-  FormHelperText,
-  Grid,
-  InputLabel,
-  MenuItem,
-  Select,
-  TextField,
-  Divider,
-  Button,
-  CircularProgress,
-  Box,
-  Menu,
-  Typography,
-  Card,
-  CardHeader,
-} from "@mui/material";
+import { Grid, Divider, Button, Typography } from "@mui/material";
 
 import { DataGrid } from "@mui/x-data-grid";
 
@@ -23,12 +6,8 @@ import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
-import DialogContentText from "@mui/material/DialogContentText";
 import { useDispatch, useSelector } from "react-redux";
 
-import { DrawField } from "src/utils/field";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect, useState } from "react";
 import Tooltip from "@mui/material/Tooltip";
 

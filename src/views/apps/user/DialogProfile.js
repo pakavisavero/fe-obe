@@ -7,19 +7,16 @@ import {
   DialogActions,
   TextField,
   FormControl,
-  FormControlLabel,
   FormHelperText,
 } from "@mui/material";
 
-import { useEffect, useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useDispatch, useSelector } from "react-redux";
-import schema from "src/views/apps/user/yup";
-
+import { useDispatch } from "react-redux";
 import { useForm, Controller } from "react-hook-form";
-import Translations from "src/layouts/components/Translations";
-
 import { updateUser } from "src/store/apps/setting/user";
+
+import schema from "src/views/apps/user/yup";
+import Translations from "src/layouts/components/Translations";
 import toast from "react-hot-toast";
 
 const DialogProfile = ({
@@ -30,11 +27,9 @@ const DialogProfile = ({
   handleEditClose,
 }) => {
   const dispatch = useDispatch();
-
   const {
-    setValue,
-    getValues,
     control,
+    setValue,
     handleSubmit,
     formState: { errors },
   } = useForm({
@@ -54,7 +49,6 @@ const DialogProfile = ({
         logout();
       })
       .catch((err) => {
-        console.log(err);
         setOpenEdit(false);
         toast.error("Username, email, or NIP is already taken!", {
           duration: 2000,
@@ -68,7 +62,7 @@ const DialogProfile = ({
   };
 
   return (
-    <Dialog open={openEdit} maxWidth="sm" onClose={handleEditClose}>
+    <Dialog open={openEdit} maxWidth="sm" fullWidth onClose={handleEditClose}>
       <DialogTitle
         id="user-view-edit"
         sx={{
@@ -79,6 +73,7 @@ const DialogProfile = ({
       >
         Edit User Information
       </DialogTitle>
+
       <DialogContent>
         <form>
           <Grid container spacing={3}>
@@ -172,6 +167,7 @@ const DialogProfile = ({
           </Grid>
         </form>
       </DialogContent>
+
       <DialogActions sx={{ justifyContent: "left", mt: 4 }}>
         <Button
           variant="contained"

@@ -1,8 +1,6 @@
 import { CardContent, Grid, Button, Divider, Box, Card } from "@mui/material";
 
 import React, { useEffect, useState } from "react";
-
-// ** MUI Imports
 import Typography from "@mui/material/Typography";
 
 import _ from "lodash";
@@ -12,10 +10,6 @@ import axios from "src/configs/AxiosSetting";
 
 import { useDispatch, useSelector } from "react-redux";
 import { DrawColumn, DrawFilter, DrawField } from "src/utils/field";
-
-import { getCookie } from "cookies-next";
-import qs from "qs";
-import toast from "react-hot-toast";
 
 import DialogSiklus from "../child/dialogSiklus";
 import GraphicAssessment from "../child/graphicAssessment";

@@ -1,29 +1,10 @@
-import {
-    CardContent,
-    FormControl,
-    FormHelperText,
-    Grid,
-    InputLabel,
-    MenuItem,
-    Select,
-    TextField,
-    Button,
-    Divider,
-} from '@mui/material'
+import React from "react";
 
-import { Controller } from 'react-hook-form'
-import { DrawField } from 'src/utils/field'
+import _ from "lodash";
+import Perkuliahan from "../child/perkuliahan";
 
-import { useDispatch, useSelector } from 'react-redux'
-import React, { useEffect, useState } from 'react'
+const PerkuliahanTab = ({ store, control }) => {
+  return <Perkuliahan control={control} store={store} />;
+};
 
-import _ from 'lodash'
-import Perkuliahan from '../child/perkuliahan'
-
-const PerkuliahanTab = ({ watch, store, control, errors, isEdit, setValue }) => {
-    return (
-        <Perkuliahan control={control} store={store} />
-    )
-}
-
-export default PerkuliahanTab
+export default PerkuliahanTab;

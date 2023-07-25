@@ -6,9 +6,6 @@ import Stack from "@mui/material/Stack";
 
 import CircularProgress from "@mui/material/CircularProgress";
 
-// ** Icons Imports
-import SendOutline from "mdi-material-ui/SendOutline";
-
 const AddActions = ({
   loading,
   actionSaveback,
@@ -17,6 +14,7 @@ const AddActions = ({
   ActionSaveNew,
   withBack,
   withSave,
+  isEdit,
 }) => {
   return (
     <Box>
@@ -59,19 +57,9 @@ const AddActions = ({
                         }}
                       />
                     ) : null}
-                    Save
+                    {isEdit ? "Update" : "Save"}
                   </Button>
                 </Box>
-                {/* <Box sx={{ width: { md: '25%', xs: '100%' } }}>
-                  <Button
-                    fullWidth
-                    // startIcon={<SendOutline />}
-                    onClick={ActionSaveNew}
-                    sx={{ backgroundColor: 'rgb(236,236,236)', color: 'black', outlineColor: 'black' }}
-                  >
-                    Save & New
-                  </Button>
-                </Box> */}
               </>
             )}
 
@@ -87,7 +75,7 @@ const AddActions = ({
                     outlineColor: "black",
                   }}
                 >
-                  Save & Back
+                  {isEdit ? "Update  & Back" : "Save  & Back"}
                 </Button>
               </Box>
             )}

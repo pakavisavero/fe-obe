@@ -1,48 +1,12 @@
-import {
-  CardContent,
-  FormControl,
-  FormHelperText,
-  Grid,
-  InputLabel,
-  MenuItem,
-  Select,
-  TextField,
-  Divider,
-  Button,
-  CircularProgress,
-  Box,
-  Menu,
-  Typography,
-  Card,
-  CardHeader,
-} from "@mui/material";
+import { Grid, Divider, Button, Box, Typography } from "@mui/material";
 
 import Dialog from "@mui/material/Dialog";
-import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
-import DialogContentText from "@mui/material/DialogContentText";
-import { useDispatch, useSelector } from "react-redux";
-
-import { DrawField } from "src/utils/field";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useEffect, useState } from "react";
-
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-
 import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import ChevronDown from "mdi-material-ui/ChevronDown";
 
-import Tooltip from "@mui/material/Tooltip";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 
 const DialogSelected = ({ open, close, data }) => {
   const dispatch = useDispatch();

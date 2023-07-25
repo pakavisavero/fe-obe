@@ -24,8 +24,8 @@ const Edit = ({ data }) => {
       defaultValues={data}
       ContentForm={ContentForm}
       clearResponse={clearResponse}
-      isEdit
       dataBreadcrumbs={dataBreadcrumbs}
+      isEdit
     />
   )
 }
