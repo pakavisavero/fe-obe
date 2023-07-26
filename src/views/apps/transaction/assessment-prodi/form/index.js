@@ -25,6 +25,8 @@ const Index = ({ control, errors, data, setValue, watch, isEdit }) => {
   const [colors, setColor] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  console.log(watch("siklus"));
+
   function getRandomColor() {
     var letters = "ABCDEF".split("");
     var color = "#";
@@ -51,7 +53,6 @@ const Index = ({ control, errors, data, setValue, watch, isEdit }) => {
   };
 
   const onCheck = (row) => {
-    console.log(row);
     if (!isEdit) setValue("siklus", row);
   };
 
@@ -61,7 +62,7 @@ const Index = ({ control, errors, data, setValue, watch, isEdit }) => {
       setDatagrid(watch("data"));
     } else {
       let bulk = [];
-      for (let data of watch("siklus")) bulk.push(data);
+      for (let data of watch("siklus")) bulk.push(data.siklus);
       setDatagrid(bulk);
     }
 
@@ -165,7 +166,9 @@ const Index = ({ control, errors, data, setValue, watch, isEdit }) => {
           onSelectionModelChange={(row) => onCheck(row)}
           isRowSelectable={() => (isEdit ? false : true)}
           selectionModel={
-            isEdit ? watch("siklus").map((item) => item.id) : watch("siklus")
+            isEdit
+              ? watch("siklus").map((item) => item.siklus.id)
+              : watch("siklus")
           }
           sx={{
             // disable cell selection style

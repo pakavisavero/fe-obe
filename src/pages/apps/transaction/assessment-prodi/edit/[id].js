@@ -47,21 +47,23 @@ export const getServerSideProps = async ({ params, req, res }) => {
       headers: { token },
     });
 
-    const siklus = await axios.get(`siklus-prodis`, {
-      headers: { token },
-    });
-
-    if (response.data.code !== 200 && siklus.data.code !== 200) {
+    if (response.data.code !== 200) {
       return {
         notFound: true,
       };
     }
 
+    const siklusAfterLoop = response.data.data.children.map((a, i) => ({
+      ...a,
+      index: i,
+      copyId: a.id,
+    }));
+
     return {
       props: {
         data: {
           ...response.data.data,
-          siklus: siklus.data.data,
+          siklus: siklusAfterLoop,
         },
       },
     };
