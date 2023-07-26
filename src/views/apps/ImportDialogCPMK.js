@@ -153,7 +153,7 @@ const ImportDialog = ({
               var formData = new FormData();
               formData.append("file", file);
               formData.append("id", id);
-              axios.post("/save-template", formData, {
+              await axios.post("save-template", formData, {
                 headers: {
                   "Content-Type": "multipart/form-data",
                 },
