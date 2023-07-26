@@ -26,8 +26,9 @@ const DialogDeactivate = ({ open, handleClose }) => {
     const response = await axios.post(`deactivate-all`);
     if (response.data.code === 200) {
       toast.success("Success deactivate semua perkuliahan!");
+      router.reload();
     } else {
-      toast.error("Gagal deactivate semua perkuliahan!");
+      toast.error("Semua perkuliahan masih dalam proses!");
       if (response.data.partial) {
         setError(true);
         setTitle(
@@ -38,7 +39,6 @@ const DialogDeactivate = ({ open, handleClose }) => {
         );
       } else {
         handleClose();
-        router.reload();
       }
     }
   };

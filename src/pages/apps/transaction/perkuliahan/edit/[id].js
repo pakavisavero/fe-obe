@@ -75,7 +75,7 @@ export const getServerSideProps = async ({ params, req, res }) => {
           prodi_id_name: {
             prodi: response.data.data.prodi.prodi,
           },
-          dosen1_id_name: {
+          dosen_id_name: {
             full_name: response.data.data.dosen1
               ? response.data.data.dosen1.full_name
               : "",
