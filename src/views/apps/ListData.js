@@ -62,8 +62,14 @@ const ListData = ({
   const { userAccess } = useAuth();
 
   useEffect(() => {
-    const access = isAccessible(userAccess.user_access, moduleName, Action.ADD);
-    setPermCreate(access);
+    try {
+      const access = isAccessible(
+        userAccess.user_access,
+        moduleName,
+        Action.ADD
+      );
+      setPermCreate(access);
+    } catch (error) {}
   }, []);
 
   const handleChangeSwitch = (row) => (e) => {
