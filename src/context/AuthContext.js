@@ -1,18 +1,13 @@
-// ** React Imports
 import { createContext, useEffect, useState } from "react";
 
-// ** Next Import
 import { useRouter } from "next/router";
 
-// ** Axios
 import axios from "src/configs/AxiosSetting";
 
-// ** Config
 import jwt from "jsonwebtoken";
 import { destroyCookie, setCookie } from "nookies";
 import authConfig from "src/configs/auth";
 
-// ** Defaults
 const defaultProvider = {
   user: null,
   userAccess: null,
@@ -32,7 +27,6 @@ const defaultProvider = {
 const AuthContext = createContext(defaultProvider);
 
 const AuthProvider = ({ children }) => {
-  // ** States
   const [user, setUser] = useState(defaultProvider.user);
   const [userAccess, setUserAccess] = useState(defaultProvider.userAccess);
   const [groups, setGroups] = useState(defaultProvider.groups);
@@ -44,7 +38,6 @@ const AuthProvider = ({ children }) => {
     defaultProvider.isInitialized
   );
 
-  // ** Hooks
   const router = useRouter();
   useEffect(() => {
     const initAuth = async () => {
@@ -162,7 +155,7 @@ const AuthProvider = ({ children }) => {
         });
         setToken(token);
 
-        await window.localStorage.setItem(
+        window.localStorage.setItem(
           "userData",
           JSON.stringify(jwt.decode(token))
         );

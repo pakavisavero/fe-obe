@@ -36,6 +36,7 @@ import { useDebouncedCallback } from "use-debounce";
 
 import { DrawColumn, DrawFilter, handleOnChangeRange } from "src/utils/field";
 import _ from "lodash";
+import { Modules } from "src/utils/token";
 
 const FilterData = ({ storeName }) => {
   const store = useSelector((state) => state[storeName]);
@@ -167,6 +168,7 @@ function Index() {
       clearParams={removeParams}
       checkboxSelection={true}
       isCreate={false}
+      moduleName={Modules.ROLE_MASTER}
     />
   );
 }

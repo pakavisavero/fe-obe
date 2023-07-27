@@ -43,6 +43,7 @@ import {
   getColorPK,
 } from "src/utils/field";
 import _ from "lodash";
+import { Modules } from "src/utils/token";
 
 const FilterData = ({ storeName }) => {
   const store = useSelector((state) => state[storeName]);
@@ -201,6 +202,7 @@ function Index() {
       clearParams={removeParams}
       checkboxSelection={true}
       isExport
+      moduleName={Modules.ASSESSMENT_PRODI}
     />
   );
 }

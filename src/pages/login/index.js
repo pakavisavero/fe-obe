@@ -184,6 +184,7 @@ const LoginPage = () => {
         <Dialog
           open={openModal}
           maxWidth="xs"
+          fullWidth
           onClose={handleModalClose}
           sx={{ maxWidth: "100%" }}
         >

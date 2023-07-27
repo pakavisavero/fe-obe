@@ -5,6 +5,7 @@ import { useEffect, useState, forwardRef } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import Translations from "src/layouts/components/Translations";
+import { Modules } from "src/utils/token";
 
 import {
   clearResponse,
@@ -392,6 +393,7 @@ function Index() {
       isImport
       isExport
       isDeactivate
+      moduleName={Modules.KBM_AKTIF}
     />
   );
 }

@@ -36,6 +36,7 @@ import { useDebouncedCallback } from "use-debounce";
 
 import { DrawColumn, DrawFilter, handleOnChangeRange } from "src/utils/field";
 import _ from "lodash";
+import { Modules } from "src/utils/token";
 
 const FilterData = ({ storeName }) => {
   const store = useSelector((state) => state[storeName]);
@@ -189,6 +190,7 @@ function Index() {
       dataBreadcrumbs={dataBreadcrumbs}
       clearParams={removeParams}
       checkboxSelection={true}
+      moduleName={Modules.TAHUN_AJARAN}
     />
   );
 }

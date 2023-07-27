@@ -2,11 +2,15 @@ import { Grid, Divider, Button, Box, Typography } from "@mui/material";
 
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
+import AccordionSummary from "@mui/material/AccordionSummary";
 import DialogActions from "@mui/material/DialogActions";
+import AccordionDetails from "@mui/material/AccordionDetails";
 import Accordion from "@mui/material/Accordion";
 
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
+import ChevronDown from "mdi-material-ui/ChevronDown";
 
 const DialogSelected = ({ open, close, data }) => {
   const dispatch = useDispatch();
@@ -100,7 +104,8 @@ const DialogSelected = ({ open, close, data }) => {
                 >
                   [{item.value}]
                 </Typography>
-                - {item.statement}
+                <Typography>&nbsp;-&nbsp;</Typography>
+                <Typography>{item.statement}</Typography>
               </AccordionSummary>
 
               <AccordionDetails>

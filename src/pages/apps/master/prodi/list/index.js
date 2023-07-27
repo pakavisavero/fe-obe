@@ -8,102 +8,102 @@ import {
   Typography,
   InputLabel,
   Select,
-  MenuItem
-} from '@mui/material'
+  MenuItem,
+} from "@mui/material";
 
-import Link from 'next/link'
-import { useEffect, useState, forwardRef } from 'react'
-import { useTranslation } from 'react-i18next'
-import { useDispatch, useSelector } from 'react-redux'
-import Translations from 'src/layouts/components/Translations'
+import Link from "next/link";
+import { useEffect, useState, forwardRef } from "react";
+import { useTranslation } from "react-i18next";
+import { useDispatch, useSelector } from "react-redux";
+import Translations from "src/layouts/components/Translations";
 
 import {
   clearResponse,
   fetchData,
   handleParams,
   removeParams,
-  updateProdi
-} from 'src/store/apps/master/prodi'
+  updateProdi,
+} from "src/store/apps/master/prodi";
 
-import { fetchData as fetchDataFakultas } from 'src/store/apps/master/fakultas'
+import { fetchData as fetchDataFakultas } from "src/store/apps/master/fakultas";
 
-import ListData from 'src/views/apps/ListData'
-import CardActionCollapse from 'src/views/ui/cards/actions/CardActionCollapse'
-import { useDebounce } from 'use-debounce'
+import ListData from "src/views/apps/ListData";
+import CardActionCollapse from "src/views/ui/cards/actions/CardActionCollapse";
+import { useDebounce } from "use-debounce";
 
-import DatePickerWrapper from 'src/@core/styles/libs/react-datepicker'
-import DatePicker from 'react-datepicker'
-import format from 'date-fns/format'
-import { useDebouncedCallback } from 'use-debounce'
+import DatePickerWrapper from "src/@core/styles/libs/react-datepicker";
+import DatePicker from "react-datepicker";
+import format from "date-fns/format";
+import { useDebouncedCallback } from "use-debounce";
 
-import { DrawColumn, DrawFilter, handleOnChangeRange } from 'src/utils/field'
-import _ from 'lodash'
-
+import { DrawColumn, DrawFilter, handleOnChangeRange } from "src/utils/field";
+import _ from "lodash";
+import { Modules } from "src/utils/token";
 
 const FilterData = ({ storeName }) => {
-  const store = useSelector(state => state[storeName])
+  const store = useSelector((state) => state[storeName]);
   const { params } = store;
 
-  const { data: dataFakultas, loading: loadingFakultas } = useSelector(state => state.fakultas)
+  const { data: dataFakultas, loading: loadingFakultas } = useSelector(
+    (state) => state.fakultas
+  );
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  const [dates, setDates] = useState([])
-  const [startDateRange, setStartDateRange] = useState(null)
-  const [endDateRange, setEndDateRange] = useState(null)
+  const [dates, setDates] = useState([]);
+  const [startDateRange, setStartDateRange] = useState(null);
+  const [endDateRange, setEndDateRange] = useState(null);
 
-  const [datesModified, setDatesModified] = useState([])
-  const [startDateRangeModified, setStartDateRangeModified] = useState(null)
-  const [endDateRangeModified, setEndDateRangeModified] = useState(null)
+  const [datesModified, setDatesModified] = useState([]);
+  const [startDateRangeModified, setStartDateRangeModified] = useState(null);
+  const [endDateRangeModified, setEndDateRangeModified] = useState(null);
 
   const defaultParam = {
     is_active: true,
     is_paging: false,
-  }
+  };
 
   useEffect(() => {
     dispatch(fetchDataFakultas({ is_active: true }));
-  }, [dispatch])
-
+  }, [dispatch]);
 
   const debounced = useDebouncedCallback(
-    event => {
-      const { value, name } = event.target
-      dispatch(handleParams({ name, value }))
+    (event) => {
+      const { value, name } = event.target;
+      dispatch(handleParams({ name, value }));
     },
     1000,
     { maxWait: 10000 }
-  )
+  );
 
-  const handleFilterAutoComplete = name => (event, newValue) => {
-    const value = newValue ? newValue.id : null
-    dispatch(handleParams({ name, value }))
-  }
-
+  const handleFilterAutoComplete = (name) => (event, newValue) => {
+    const value = newValue ? newValue.id : null;
+    dispatch(handleParams({ name, value }));
+  };
 
   const fields = [
     {
-      name: 'prodi',
-      type: 'text',
+      name: "prodi",
+      type: "text",
       onChange: debounced,
-      label: 'Program Studi',
+      label: "Program Studi",
       xs: 12,
-      md: 4
+      md: 4,
     },
     {
-      name: 'fakultas',
-      type: 'autocomplete',
-      onChange: handleFilterAutoComplete('fakultas_id'),
-      label: 'Fakultas',
-      optLabel: 'nama_fakultas',
-      data: _.sortBy(dataFakultas, ['nama_fakultas']),
+      name: "fakultas",
+      type: "autocomplete",
+      onChange: handleFilterAutoComplete("fakultas_id"),
+      label: "Fakultas",
+      optLabel: "nama_fakultas",
+      data: _.sortBy(dataFakultas, ["nama_fakultas"]),
       xs: 12,
-      md: 4
+      md: 4,
     },
     {
-      name: 'created_at',
-      type: 'date',
-      label: 'Date Created',
+      name: "created_at",
+      type: "date",
+      label: "Date Created",
       xs: 12,
       md: 4,
       dates: dates,
@@ -115,12 +115,13 @@ const FilterData = ({ storeName }) => {
         setDates,
         dispatch,
         handleParams,
-        'created_at')
+        "created_at"
+      ),
     },
     {
-      name: 'modified_at',
-      type: 'date',
-      label: 'Date Modified',
+      name: "modified_at",
+      type: "date",
+      label: "Date Modified",
       xs: 12,
       md: 4,
       dates: datesModified,
@@ -132,73 +133,74 @@ const FilterData = ({ storeName }) => {
         setDatesModified,
         dispatch,
         handleParams,
-        'modified_at'
-      )
-    }
+        "modified_at"
+      ),
+    },
   ];
 
   return (
-    <CardActionCollapse title={<Translations text={'Filters'} />}>
+    <CardActionCollapse title={<Translations text={"Filters"} />}>
       <Grid container spacing={2}>
         {fields.map((field, key) => DrawFilter(field, key))}
       </Grid>
     </CardActionCollapse>
-  )
-}
+  );
+};
 
 function Index() {
-  const { t } = useTranslation()
+  const { t } = useTranslation();
 
   const fields = [
     {
       minWidth: 80,
-      headerName: 'Series',
-      name: 'id',
-      type: 'link',
+      headerName: "Series",
+      name: "id",
+      type: "link",
       hide: true,
-      link: '/apps/master/prodi/edit/',
-      value: value => value.id,
-      valueLink: value => value.id
+      link: "/apps/master/prodi/edit/",
+      value: (value) => value.id,
+      valueLink: (value) => value.id,
     },
     {
-      name: 'prodi',
+      name: "prodi",
       minWidth: 200,
-      headerName: 'Program Studi',
-      type: 'link',
-      link: '/apps/master/prodi/edit/',
-      value: value => value.prodi ? value.prodi : '-',
-      valueLink: value => value.id
+      headerName: "Program Studi",
+      type: "link",
+      link: "/apps/master/prodi/edit/",
+      value: (value) => (value.prodi ? value.prodi : "-"),
+      valueLink: (value) => value.id,
     },
     {
-      name: 'fakultas',
+      name: "fakultas",
       minWidth: 200,
-      headerName: 'Fakultas',
-      value: value => value.fakultas ? value.fakultas.nama_fakultas : '-',
+      headerName: "Fakultas",
+      value: (value) => (value.fakultas ? value.fakultas.nama_fakultas : "-"),
     },
   ];
 
-  const defaultColumns = fields.map(field => DrawColumn(field));
+  const defaultColumns = fields.map((field) => DrawColumn(field));
 
   const dataBreadcrumbs = [
-    { name: <Translations text={'Master'} /> },
-    { name: 'Mata Kuliah' },
+    { name: <Translations text={"Master"} /> },
+    { name: "Mata Kuliah" },
   ];
 
   return (
     <ListData
       defaultColumns={defaultColumns}
-      nameLabel={`${t('Program Studi')}`}
-      storeName={'prodi'}
+      nameLabel={`${t("Program Studi")}`}
+      storeName={"prodi"}
       updateData={updateProdi}
-      urlData={'/apps/master/prodi/'}
+      urlData={"/apps/master/prodi/"}
       getData={fetchData}
       clearResponse={clearResponse}
-      filterData={<FilterData storeName={'prodi'} />}
+      filterData={<FilterData storeName={"prodi"} />}
       dataBreadcrumbs={dataBreadcrumbs}
       clearParams={removeParams}
       checkboxSelection={true}
+      moduleName={Modules.PROGRAM_STUDI}
     />
-  )
+  );
 }
 
-export default Index
+export default Index;

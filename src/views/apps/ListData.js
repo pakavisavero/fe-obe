@@ -1,21 +1,23 @@
 import { Box, LinearProgress } from "@mui/material";
+import { DataGrid } from "@mui/x-data-grid";
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
-import { DataGrid } from "@mui/x-data-grid";
 import EyeOutline from "mdi-material-ui/EyeOutline";
 
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import toast from "react-hot-toast";
+import Breadcrumbs from "./Breadcrumbs";
+import TableHeader from "src/views/apps/master/TableHeader";
 
 import { useDispatch, useSelector } from "react-redux";
 import { fDateTimeSuffix } from "src/@core/utils/format";
-import TableHeader from "src/views/apps/master/TableHeader";
-import Breadcrumbs from "./Breadcrumbs";
 import { useSettings } from "src/@core/hooks/useSettings";
+import { useAuth } from "src/hooks/useAuth";
+import { Modules, isAccessible, Action } from "src/utils/token";
 
 /* eslint-enable */
 const ListData = ({
@@ -43,18 +45,26 @@ const ListData = ({
   isCreate = true,
   exportName,
   redNotActive = true,
+  moduleName,
 }) => {
   const { settings } = useSettings();
 
-  // ** State
+  const [permCreate, setPermCreate] = React.useState(isCreate);
+
   const [page, setPage] = React.useState(0);
   const [pageSize, setPageSize] = useState(10);
   const [selectedRows, setSelectedRows] = useState([]);
 
-  // ** Hooks
   const store = useSelector((state) => state[storeName]);
+
   const { message, error, params, loading, total, data: datagrid } = store;
   const dispatch = useDispatch();
+  const { userAccess } = useAuth();
+
+  useEffect(() => {
+    const access = isAccessible(userAccess.user_access, moduleName, Action.ADD);
+    setPermCreate(access);
+  }, []);
 
   const handleChangeSwitch = (row) => (e) => {
     const is_active = row.is_active == true ? false : true;
@@ -246,7 +256,7 @@ const ListData = ({
             isImport={isImport}
             isExport={isExport}
             isDeactivate={isDeactivate}
-            isCreate={isCreate}
+            isCreate={permCreate}
             params={params}
             storeName={storeName}
             exportName={exportName}
@@ -257,7 +267,6 @@ const ListData = ({
 
           <DataGrid
             // style={{ fontSize: 11 }}
-
             disableColumnFilter
             autoHeight
             pagination
