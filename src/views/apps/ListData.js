@@ -63,12 +63,14 @@ const ListData = ({
 
   useEffect(() => {
     try {
-      const access = isAccessible(
-        userAccess.user_access,
-        moduleName,
-        Action.ADD
-      );
-      setPermCreate(access);
+      if (isCreate) {
+        const access = isAccessible(
+          userAccess.user_access,
+          moduleName,
+          Action.ADD
+        );
+        setPermCreate(access);
+      }
     } catch (error) {}
   }, []);
 

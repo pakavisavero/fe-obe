@@ -17,6 +17,8 @@ const ImportDialog = ({
   callback,
   templateFile = "",
   id,
+  handleOpenDialog,
+  handleCloseDialog,
 }) => {
   const [file, setFile] = useState(null);
 
@@ -71,6 +73,8 @@ const ImportDialog = ({
           </Button>
           <Button
             onClick={async () => {
+              handleClose();
+              handleOpenDialog();
               const f = await file.arrayBuffer();
               const wb = read(f); // parse the array buffer
 
@@ -161,7 +165,8 @@ const ImportDialog = ({
 
               callback(data);
               setFile(null);
-              handleClose();
+              handleCloseDialog();
+              // handleClose();
             }}
             autoFocus
             disabled={file ? false : true}

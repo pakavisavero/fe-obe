@@ -62,6 +62,40 @@ const PerkuliahanTab = ({
   const store = useSelector((state) => state.perkuliahan);
   const { currentId, loading, message, error } = store;
 
+  const [open, setOpen] = useState({
+    dpna: false,
+    cpmk: false,
+    prodi: false,
+    mataKuliah: false,
+    dosen1: false,
+    dosen2: false,
+    dosen3: false,
+    pjDosen: false,
+    tahunAjaran: false,
+    semester: false,
+  });
+
+  const handleClose = (name) => () => {
+    setOpen((prevState) => ({
+      ...prevState,
+      [name]: false,
+    }));
+  };
+
+  const handleOpen = (name) => () => {
+    setOpen((prevState) => ({
+      ...prevState,
+      [name]: true,
+    }));
+  };
+
+  const handleChangeOpen = (name) => () => {
+    setOpen((prevState) => ({
+      ...prevState,
+      [name]: !prevState[name],
+    }));
+  };
+
   const { data: dataProdi, loading: loadingProdi } = useSelector(
     (state) => state.prodi
   );
@@ -168,6 +202,10 @@ const PerkuliahanTab = ({
       data: _.sortBy(dataProdi, ["prodi"]),
       loading: loadingProdi,
       optLabel: "prodi",
+      open: open.prodi,
+      handleOpen: handleOpen("prodi"),
+      handleClose: handleClose("prodi"),
+      changeOpen: handleChangeOpen("prodi"),
       changeSearch: SearchhandleFilterAutoComplete("prodi", fetchDataProdi),
       onChange: handleChangeAutoComplete("prodi_id_name", "prodi"),
       disabled: isEdit ? true : false,
@@ -183,6 +221,10 @@ const PerkuliahanTab = ({
       loading: loadingMataKuiah,
       optLabel: "kode_mk",
       optLabel2: "mata_kuliah",
+      open: open.mataKuliah,
+      handleOpen: handleOpen("mataKuliah"),
+      handleClose: handleClose("mataKuliah"),
+      changeOpen: handleChangeOpen("mataKuliah"),
       changeSearch: SearchhandleFilterAutoComplete(
         "mata_kuliah",
         fetchDataMataKuliah
@@ -200,6 +242,10 @@ const PerkuliahanTab = ({
       data: _.sortBy(watch("prodi_id") ? dataDosen : [], ["full_name"]),
       loading: loadingDosen,
       optLabel: "full_name",
+      open: open.dosen1,
+      handleOpen: handleOpen("dosen1"),
+      handleClose: handleClose("dosen1"),
+      changeOpen: handleChangeOpen("dosen1"),
       changeSearch: SearchhandleFilterAutoComplete("full_name", fetchDataDosen),
       onChange: handleChangeAutoComplete("dosen1_id_name", "full_name"),
     },
@@ -211,13 +257,17 @@ const PerkuliahanTab = ({
       xs: 12,
       md: 4,
       data: _.sortBy(
-        watch("dosen1_id")
+        watch("dosen_id")
           ? dataDosen.filter((item) => item.id != watch("dosen1_id"))
           : [],
         ["full_name"]
       ),
       loading: loadingDosen,
       optLabel: "full_name",
+      open: open.dosen2,
+      handleOpen: handleOpen("dosen2"),
+      handleClose: handleClose("dosen2"),
+      changeOpen: handleChangeOpen("dosen2"),
       changeSearch: SearchhandleFilterAutoComplete("full_name", fetchDataDosen),
       onChange: handleChangeAutoComplete("dosen2_id_name", "full_name"),
     },
@@ -239,6 +289,10 @@ const PerkuliahanTab = ({
       ),
       loading: loadingDosen,
       optLabel: "full_name",
+      open: open.dosen3,
+      handleOpen: handleOpen("dosen3"),
+      handleClose: handleClose("dosen3"),
+      changeOpen: handleChangeOpen("dosen3"),
       changeSearch: SearchhandleFilterAutoComplete("full_name", fetchDataDosen),
       onChange: handleChangeAutoComplete("dosen3_id_name", "full_name"),
     },
@@ -252,6 +306,10 @@ const PerkuliahanTab = ({
       data: _.sortBy(watch("prodi_id") ? getPJDosen() : [], ["full_name"]),
       loading: loadingDosen,
       optLabel: "full_name",
+      open: open.pjDosen,
+      handleOpen: handleOpen("pjDosen"),
+      handleClose: handleClose("pjDosen"),
+      changeOpen: handleChangeOpen("pjDosen"),
       changeSearch: SearchhandleFilterAutoComplete("full_name", fetchDataDosen),
       onChange: handleChangeAutoComplete("pj_dosen_id_name", "full_name"),
     },
@@ -272,6 +330,10 @@ const PerkuliahanTab = ({
       data: _.sortBy(dataTahunAjaran, ["tahun_ajaran"]),
       loading: loadingTahunAjaran,
       optLabel: "tahun_ajaran",
+      open: open.tahunAjaran,
+      handleOpen: handleOpen("tahunAjaran"),
+      handleClose: handleClose("tahunAjaran"),
+      changeOpen: handleChangeOpen("tahunAjaran"),
       onChange: handleChangeAutoComplete(
         "tahun_ajaran_id_name",
         "tahun_ajaran"
@@ -316,25 +378,6 @@ const PerkuliahanTab = ({
   const refreshMahasiswa = async () => {
     const response = await axios.get(`perkuliahan/${id}`);
     setValueData("mahasiswa", response.data.data.mahasiswa);
-  };
-
-  const [open, setOpen] = useState({
-    dpna: false,
-    cpmk: false,
-  });
-
-  const handleClose = (name) => () => {
-    setOpen((prevState) => ({
-      ...prevState,
-      [name]: false,
-    }));
-  };
-
-  const handleOpen = (name) => () => {
-    setOpen((prevState) => ({
-      ...prevState,
-      [name]: true,
-    }));
   };
 
   const handleDownload = () => {

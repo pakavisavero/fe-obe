@@ -4,6 +4,7 @@ import axios from "src/configs/AxiosSetting";
 import FormData from "src/views/apps/FormDataMultipleChild";
 import ContentForm from "src/views/apps/master/dosen/form/index";
 import schema from "src/views/apps/master/dosen/yup";
+import { Modules } from "src/utils/token";
 
 import {
   addDosen,
@@ -32,6 +33,7 @@ const Edit = ({ data }) => {
       isEdit
       withSave={false}
       withBack={false}
+      moduleName={Modules.DOSEN}
     />
   );
 };

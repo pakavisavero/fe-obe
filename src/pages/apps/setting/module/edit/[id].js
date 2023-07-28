@@ -9,6 +9,7 @@ import ContentForm from "src/views/apps/setting/module/form/index";
 import schema from "src/views/apps/setting/module/yup";
 import Translations from "src/layouts/components/Translations";
 import { getCookie } from "cookies-next";
+import { Modules } from "src/utils/token";
 
 const Edit = ({ data }) => {
   const dataBreadcrumbs = [
@@ -29,6 +30,7 @@ const Edit = ({ data }) => {
       clearResponse={clearResponse}
       isEdit
       dataBreadcrumbs={dataBreadcrumbs}
+      moduleName={Modules.MODULE}
     />
   );
 };

@@ -11,6 +11,7 @@ import ContentForm from "src/views/apps/transaction/assessment-prodi/form/index"
 import schema from "src/views/apps/transaction/assessment-prodi/yup";
 
 import { getCookie } from "cookies-next";
+import { Modules } from "src/utils/token";
 
 const Edit = ({ data }) => {
   const dataBreadcrumbs = [
@@ -36,6 +37,7 @@ const Edit = ({ data }) => {
       dataBreadcrumbs={dataBreadcrumbs}
       withSave={false}
       withBack={false}
+      moduleName={Modules.ASSESSMENT_PRODI}
     />
   );
 };

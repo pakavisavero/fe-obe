@@ -12,6 +12,32 @@ import _ from "lodash";
 
 const Index = ({ watch, control, errors, isEdit, setValue }) => {
   const dispatch = useDispatch();
+
+  const [open, setOpen] = useState({
+    prodi: false,
+  });
+
+  const handleOpen = (name) => () => {
+    setOpen((prevState) => ({
+      ...prevState,
+      [name]: true,
+    }));
+  };
+
+  const handleClose = (name) => () => {
+    setOpen((prevState) => ({
+      ...prevState,
+      [name]: false,
+    }));
+  };
+
+  const handleChangeOpen = (name) => () => {
+    setOpen((prevState) => ({
+      ...prevState,
+      [name]: !prevState[name],
+    }));
+  };
+
   const [openEdit, setOpenEdit] = useState(false);
 
   const handleEditClickOpen = () => setOpenEdit(true);
@@ -92,6 +118,10 @@ const Index = ({ watch, control, errors, isEdit, setValue }) => {
       data: _.sortBy(dataProdi, ["prodi"]),
       loading: loadingProdi,
       optLabel: "prodi",
+      open: open.prodi,
+      handleOpen: handleOpen("prodi"),
+      handleClose: handleClose("prodi"),
+      changeOpen: handleChangeOpen("prodi"),
       onChange: handleChangeAutoComplete("prodi_id_name", "prodi"),
     },
     {

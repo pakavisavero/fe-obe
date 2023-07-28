@@ -17,8 +17,34 @@ import { fetchData as fetchDataMataKuliah } from "src/store/apps/master/mataKuli
 
 import _ from "lodash";
 
-const Index = ({ control, errors, setValue, isEdit }) => {
+const Index = ({ control, errors, setValue, isEdit, watch, reset }) => {
   const dispatch = useDispatch();
+
+  const [open, setOpen] = useState({
+    mataKuliah: false,
+    mapping: false,
+  });
+
+  const handleOpen = (name) => () => {
+    setOpen((prevState) => ({
+      ...prevState,
+      [name]: true,
+    }));
+  };
+
+  const handleClose = (name) => () => {
+    setOpen((prevState) => ({
+      ...prevState,
+      [name]: false,
+    }));
+  };
+
+  const handleChangeOpen = (name) => () => {
+    setOpen((prevState) => ({
+      ...prevState,
+      [name]: !prevState[name],
+    }));
+  };
 
   const { data: dataMataKuliah, loading: loadingMataKuliah } = useSelector(
     (state) => state.mataKuliah
@@ -37,6 +63,12 @@ const Index = ({ control, errors, setValue, isEdit }) => {
       setValue(name, null);
       setValue(nameSplit[0], "");
     }
+
+    if (nameSplit[0] == "mata_kuliah_id") {
+      if (!newValue) {
+        reset({ mapping_id: undefined });
+      }
+    }
   };
 
   const fields = [
@@ -51,6 +83,10 @@ const Index = ({ control, errors, setValue, isEdit }) => {
       loading: loadingMataKuliah,
       optLabel: "kode_mk",
       optLabel2: "mata_kuliah",
+      open: open.mataKuliah,
+      handleOpen: handleOpen("mataKuliah"),
+      handleClose: handleClose("mataKuliah"),
+      changeOpen: handleChangeOpen("mataKuliah"),
       onChange: handleChangeAutoComplete(
         "mata_kuliah_id_name",
         "mata_kuliah",
@@ -65,10 +101,19 @@ const Index = ({ control, errors, setValue, isEdit }) => {
       label: "Link To",
       xs: 12,
       md: 4,
-      data: _.sortBy(dataMataKuliah, ["mata_kuliah"]),
+      data: _.sortBy(
+        watch("mata_kuliah_id")
+          ? dataMataKuliah.filter((item) => item.id != watch("mata_kuliah_id"))
+          : [],
+        ["mata_kuliah"]
+      ),
       loading: loadingMataKuliah,
       optLabel: "kode_mk",
       optLabel2: "mata_kuliah",
+      open: open.mapping,
+      handleOpen: handleOpen("mapping"),
+      handleClose: handleClose("mapping"),
+      changeOpen: handleChangeOpen("mapping"),
       onChange: handleChangeAutoComplete(
         "mapping_id_name",
         "mata_kuliah",

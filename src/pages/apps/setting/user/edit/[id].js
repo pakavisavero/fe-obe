@@ -10,6 +10,7 @@ import schema from "src/views/apps/setting/user/yupEdit";
 import axios from "src/configs/AxiosSetting";
 
 import { getCookie } from "cookies-next";
+import { Modules } from "src/utils/token";
 
 const Edit = ({ data }) => {
   const dataBreadcrumbs = [
@@ -30,6 +31,7 @@ const Edit = ({ data }) => {
       clearResponse={clearResponse}
       dataBreadcrumbs={dataBreadcrumbs}
       isEdit
+      moduleName={Modules.USERS}
     />
   );
 };

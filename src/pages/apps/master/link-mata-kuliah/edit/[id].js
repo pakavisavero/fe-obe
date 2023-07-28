@@ -10,6 +10,7 @@ import ContentForm from "src/views/apps/master/link-mata-kuliah/form/index";
 import schema from "src/views/apps/master/link-mata-kuliah/yup";
 import Translations from "src/layouts/components/Translations";
 import { getCookie } from "cookies-next";
+import { Modules } from "src/utils/token";
 
 const Edit = ({ data }) => {
   const dataBreadcrumbs = [
@@ -32,6 +33,7 @@ const Edit = ({ data }) => {
       isEdit
       withSave={false}
       withBack={false}
+      moduleName={Modules.LINK_MATA_KULIAH}
     />
   );
 };

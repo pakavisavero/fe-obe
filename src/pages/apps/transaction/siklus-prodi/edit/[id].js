@@ -11,6 +11,7 @@ import ContentForm from "src/views/apps/transaction/siklus-prodi/form/index";
 import schema from "src/views/apps/transaction/siklus-prodi/yup";
 
 import { getCookie } from "cookies-next";
+import { Modules } from "src/utils/token";
 
 const Edit = ({ data }) => {
   const dataBreadcrumbs = [
@@ -18,8 +19,6 @@ const Edit = ({ data }) => {
     { name: "Siklus Prodi", link: "/apps/transaction/siklus-prodi/list" },
     { name: data.name },
   ];
-
-  console.log(data);
 
   return (
     <FormData
@@ -35,6 +34,7 @@ const Edit = ({ data }) => {
       isEdit
       withSave={false}
       withBack={false}
+      moduleName={Modules.SIKLUS_PRODI}
     />
   );
 };

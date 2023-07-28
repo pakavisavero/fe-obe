@@ -10,6 +10,7 @@ import ContentForm from "src/views/apps/transaction/perkuliahan/form/index";
 import schema from "src/views/apps/transaction/perkuliahan/yup";
 import Translations from "src/layouts/components/Translations";
 import { getCookie } from "cookies-next";
+import { Modules } from "src/utils/token";
 
 const Edit = ({ data }) => {
   const dataBreadcrumbs = [
@@ -38,6 +39,7 @@ const Edit = ({ data }) => {
       withDocStatus
       withSave={false}
       withBack={false}
+      moduleName={Modules.KBM_AKTIF}
     />
   );
 };

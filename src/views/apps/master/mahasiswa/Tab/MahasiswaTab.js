@@ -22,6 +22,33 @@ import _ from "lodash";
 const Index = ({ control, errors, watch, setValue, setValueData }) => {
   const dispatch = useDispatch();
 
+  const [open, setOpen] = useState({
+    prodi: false,
+    doswal: false,
+    status: false,
+  });
+
+  const handleOpen = (name) => () => {
+    setOpen((prevState) => ({
+      ...prevState,
+      [name]: true,
+    }));
+  };
+
+  const handleClose = (name) => () => {
+    setOpen((prevState) => ({
+      ...prevState,
+      [name]: false,
+    }));
+  };
+
+  const handleChangeOpen = (name) => () => {
+    setOpen((prevState) => ({
+      ...prevState,
+      [name]: !prevState[name],
+    }));
+  };
+
   const { data: dataProdi, loading: loadingProdi } = useSelector(
     (state) => state.prodi
   );
@@ -121,6 +148,10 @@ const Index = ({ control, errors, watch, setValue, setValueData }) => {
       data: _.sortBy(dataProdi, ["prodi"]),
       loading: loadingProdi,
       optLabel: "prodi",
+      open: open.prodi,
+      handleOpen: handleOpen("prodi"),
+      handleClose: handleClose("prodi"),
+      changeOpen: handleChangeOpen("prodi"),
       changeSearch: SearchhandleFilterAutoCompleteProdi,
       onChange: handleChangeAutoComplete("prodi_id_name", "prodi"),
     },
@@ -134,6 +165,10 @@ const Index = ({ control, errors, watch, setValue, setValueData }) => {
       data: _.sortBy(dataDosen, ["full_name"]),
       loading: loadingDosen,
       optLabel: "full_name",
+      open: open.doswal,
+      handleOpen: handleOpen("doswal"),
+      handleClose: handleClose("doswal"),
+      changeOpen: handleChangeOpen("doswal"),
       changeSearch: SearchhandleFilterAutoCompleteDosen,
       onChange: handleChangeAutoComplete("doswal_id_name", "full_name"),
     },
@@ -142,12 +177,16 @@ const Index = ({ control, errors, watch, setValue, setValueData }) => {
       key: "status_mhs_id",
       name: "status_mhs_id_name",
       type: "autocomplete",
-      label: "Status",
+      label: "Status Mahasiswa",
       xs: 12,
       md: 4,
       data: _.sortBy(dataStatusMhs, ["status"]),
       loading: loadingStatusMhs,
       optLabel: "status",
+      open: open.status,
+      handleOpen: handleOpen("status"),
+      handleClose: handleClose("status"),
+      changeOpen: handleChangeOpen("status"),
       onChange: handleChangeAutoComplete("status_mhs_id_name", "prodi"),
     },
     {

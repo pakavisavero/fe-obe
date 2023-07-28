@@ -225,60 +225,64 @@ export const DrawField = (field, errors, control, key) => {
               name={field.name}
               control={control}
               rules={{ required: true }}
-              render={({ field: { value, onChange } }) => (
-                <FormControl fullWidth error={Boolean(errors[field.key])}>
-                  <Autocomplete
-                    freeSolo
-                    options={field.data}
-                    getOptionLabel={(option) => getOptLabel(option)}
-                    value={value ?? null}
-                    onChange={field.onChange}
-                    open={field.open}
-                    onOpen={field.handleOpen}
-                    onClose={field.handleClose}
-                    disabled={field.disabled}
-                    readOnly={field.readOnly}
-                    renderInput={(params) => (
-                      <>
-                        <TextField
-                          {...params}
-                          onChange={field.changeSearch}
-                          label={<Translations text={field.label} />}
-                          InputProps={{
-                            ...params.InputProps,
+              render={({ field: { value, onChange } }) => {
+                return (
+                  <FormControl fullWidth error={Boolean(errors[field.key])}>
+                    <Autocomplete
+                      options={field.data}
+                      getOptionLabel={(option) => getOptLabel(option)}
+                      value={value ?? null}
+                      onChange={field.onChange}
+                      open={field.open}
+                      onOpen={field.handleOpen}
+                      onClose={field.handleClose}
+                      disabled={field.disabled}
+                      readOnly={field.readOnly}
+                      renderInput={(params) => (
+                        <>
+                          <TextField
+                            {...params}
+                            onChange={field.changeSearch}
+                            label={<Translations text={field.label} />}
+                            InputProps={{
+                              ...params.InputProps,
 
-                            startAdornment: !field.disabled && (
-                              <InputAdornment InputAdornment position="start">
-                                {field.accessories}
-                                <IconButton
-                                  onClick={field.changeOpen}
-                                  edge="end"
-                                >
-                                  {field.open ? (
-                                    <ChevronUp color="inherit" size={20} />
-                                  ) : (
-                                    <ChevronDown color="inherit" size={20} />
-                                  )}
-                                </IconButton>
-                              </InputAdornment>
-                            ),
-                            endAdornment: (
-                              <>
-                                {field.loading ? (
-                                  <CircularProgress color="inherit" size={20} />
-                                ) : null}
-                                {params.InputProps.endAdornment}
-                              </>
-                            ),
-                          }}
-                          error={Boolean(errors[field.key])}
-                        />
-                      </>
-                    )}
-                    renderOption={field.renderOption}
-                  />
-                </FormControl>
-              )}
+                              startAdornment: !field.disabled && (
+                                <InputAdornment InputAdornment position="start">
+                                  {field.accessories}
+                                  <IconButton
+                                    onClick={field.changeOpen}
+                                    edge="end"
+                                  >
+                                    {field.open ? (
+                                      <ChevronUp color="inherit" size={20} />
+                                    ) : (
+                                      <ChevronDown color="inherit" size={20} />
+                                    )}
+                                  </IconButton>
+                                </InputAdornment>
+                              ),
+                              endAdornment: (
+                                <>
+                                  {field.loading ? (
+                                    <CircularProgress
+                                      color="inherit"
+                                      size={20}
+                                    />
+                                  ) : null}
+                                  {params.InputProps.endAdornment}
+                                </>
+                              ),
+                            }}
+                            error={Boolean(errors[field.key])}
+                          />
+                        </>
+                      )}
+                      renderOption={field.renderOption}
+                    />
+                  </FormControl>
+                );
+              }}
             />
             {errors[field.key] && (
               <FormHelperText sx={{ color: "error.main" }}>
@@ -485,7 +489,7 @@ export const DrawColumn = (field) => {
     minWidth: field.minWidth,
     headerName: t(field.headerName),
   };
-  
+
   if (field.type === "link") {
     obj.renderCell = ({ row }) => (
       <Link href={`${field.link}${field.valueLink(row)}`} passHref>
@@ -602,10 +606,9 @@ export const DrawFilter = (field, key) => {
       <Grid key={key} item xs={field.xs} md={field.md}>
         <FormControl fullWidth>
           <Autocomplete
-            freeSolo
             options={field.data}
             getOptionLabel={(option) => getOptLabel(option)}
-            value={field.value}
+            value={field.value ?? null}
             name={field.name}
             onChange={field.onChange}
             renderInput={(params) => (
@@ -616,7 +619,14 @@ export const DrawFilter = (field, key) => {
                 label={<Translations text={field.label} />}
                 InputProps={{
                   ...params.InputProps,
-                  endAdornment: <>{params.InputProps.endAdornment}</>,
+                  endAdornment: (
+                    <>
+                      {field.loading ? (
+                        <CircularProgress color="inherit" size={20} />
+                      ) : null}
+                      {params.InputProps.endAdornment}
+                    </>
+                  ),
                 }}
               />
             )}
@@ -653,38 +663,4 @@ export const getColorPK = (value) => {
   if (value === 1) return "#669999";
   if (value === 2) return "#FFD93D";
   if (value === 3) return "#16FF00";
-};
-
-export const getColorCaseStatus = (value) => {
-  if (value === 0) return "#ffff66"; //
-  if (value === 1) return "#ff9900"; //
-  if (value === 2) return "#33cccc"; //
-  if (value === 3) return "#669999"; //
-  if (value === 4) return "#6600cc"; //
-  if (value === 5) return "#cc9900"; //
-  if (value === 6) return "#999966";
-  if (value === 7) return "#669999"; //
-  if (value === 8) return "#3366ff"; //
-  if (value === 9) return "#66ff66"; //
-  if (value === 10) return "#ccff99";
-  if (value === 11) return "#aea8bd";
-};
-
-export const getLabelCaseStatus = (value) => {
-  if (value === 1) return "Progress";
-  if (value === 2) return "Waiting Action (TTB)";
-  if (value === 3) return "Quotation to Cust";
-  if (value === 4) return "Waiting Cust Approval";
-  if (value === 5) return "Ordering SparePart/STP";
-  if (value === 6) return "Waiting SparePart/STP";
-  if (value === 7) return "Repair";
-  if (value === 8) return "Ready For Pickup";
-  if (value === 9) return "Done";
-  if (value === 10) return "STP";
-  if (value === 11) return "Waiting From Principal";
-};
-
-export const getColorStockTransfer = (value) => {
-  if (value === "OUT") return "#F45050";
-  if (value === "IN") return "#00ff00";
 };

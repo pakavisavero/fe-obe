@@ -20,6 +20,31 @@ import _ from "lodash";
 const Index = ({ control, errors, setValue }) => {
   const dispatch = useDispatch();
 
+  const [open, setOpen] = useState({
+    fakultas: false,
+  });
+
+  const handleOpen = (name) => () => {
+    setOpen((prevState) => ({
+      ...prevState,
+      [name]: true,
+    }));
+  };
+
+  const handleClose = (name) => () => {
+    setOpen((prevState) => ({
+      ...prevState,
+      [name]: false,
+    }));
+  };
+
+  const handleChangeOpen = (name) => () => {
+    setOpen((prevState) => ({
+      ...prevState,
+      [name]: !prevState[name],
+    }));
+  };
+
   const { data: dataFakultas, loading: loadingFakultas } = useSelector(
     (state) => state.fakultas
   );
@@ -62,6 +87,10 @@ const Index = ({ control, errors, setValue }) => {
       data: _.sortBy(dataFakultas, ["nama_fakultas"]),
       loading: loadingFakultas,
       optLabel: "nama_fakultas",
+      open: open.fakultas,
+      handleOpen: handleOpen("fakultas"),
+      handleClose: handleClose("fakultas"),
+      changeOpen: handleChangeOpen("fakultas"),
       onChange: handleChangeAutoComplete("fakultas_id_name", "nama_fakultas"),
     },
     {

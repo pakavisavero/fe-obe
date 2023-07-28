@@ -12,6 +12,32 @@ import _ from "lodash";
 const Index = ({ control, errors, setValue }) => {
   const dispatch = useDispatch();
 
+  const [open, setOpen] = useState({
+    kurikulum: false,
+    prodi: false,
+  });
+
+  const handleOpen = (name) => () => {
+    setOpen((prevState) => ({
+      ...prevState,
+      [name]: true,
+    }));
+  };
+
+  const handleClose = (name) => () => {
+    setOpen((prevState) => ({
+      ...prevState,
+      [name]: false,
+    }));
+  };
+
+  const handleChangeOpen = (name) => () => {
+    setOpen((prevState) => ({
+      ...prevState,
+      [name]: !prevState[name],
+    }));
+  };
+
   const { data: dataKurikulum, loading: loadingKurikulum } = useSelector(
     (state) => state.kurikulum
   );
@@ -79,6 +105,10 @@ const Index = ({ control, errors, setValue }) => {
       data: _.sortBy(dataKurikulum, ["name"]),
       loading: loadingKurikulum,
       optLabel: "name",
+      open: open.kurikulum,
+      handleOpen: handleOpen("kurikulum"),
+      handleClose: handleClose("kurikulum"),
+      changeOpen: handleChangeOpen("kurikulum"),
       onChange: handleChangeAutoComplete("kurikulum_id_name", "name"),
     },
     {
@@ -91,6 +121,10 @@ const Index = ({ control, errors, setValue }) => {
       data: _.sortBy(dataProdi, ["prodi"]),
       loading: loadingProdi,
       optLabel: "prodi",
+      open: open.prodi,
+      handleOpen: handleOpen("prodi"),
+      handleClose: handleClose("prodi"),
+      changeOpen: handleChangeOpen("prodi"),
       onChange: handleChangeAutoComplete("prodi_id_name", "prodi"),
     },
     {

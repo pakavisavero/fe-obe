@@ -10,6 +10,8 @@ import {
   Button,
   Divider,
   Typography,
+  Backdrop,
+  CircularProgress,
 } from "@mui/material";
 
 import { DrawField } from "src/utils/field";
@@ -61,6 +63,42 @@ const PerkuliahanTab = ({
 
   const store = useSelector((state) => state.perkuliahan);
   const { currentId, loading, message, error } = store;
+
+  const [open, setOpen] = useState({
+    dpna: false,
+    cpmk: false,
+    prodi: false,
+    mataKuliah: false,
+    dosen1: false,
+    dosen2: false,
+    dosen3: false,
+    pjDosen: false,
+    tahunAjaran: false,
+    semester: false,
+  });
+
+  const [backdrop, setBackdrop] = useState(false);
+
+  const handleClose = (name) => () => {
+    setOpen((prevState) => ({
+      ...prevState,
+      [name]: false,
+    }));
+  };
+
+  const handleOpen = (name) => () => {
+    setOpen((prevState) => ({
+      ...prevState,
+      [name]: true,
+    }));
+  };
+
+  const handleChangeOpen = (name) => () => {
+    setOpen((prevState) => ({
+      ...prevState,
+      [name]: !prevState[name],
+    }));
+  };
 
   const { data: dataProdi, loading: loadingProdi } = useSelector(
     (state) => state.prodi
@@ -171,6 +209,10 @@ const PerkuliahanTab = ({
       data: _.sortBy(dataProdi, ["prodi"]),
       loading: loadingProdi,
       optLabel: "prodi",
+      open: open.prodi,
+      handleOpen: handleOpen("prodi"),
+      handleClose: handleClose("prodi"),
+      changeOpen: handleChangeOpen("prodi"),
       changeSearch: SearchhandleFilterAutoComplete("prodi", fetchDataProdi),
       onChange: handleChangeAutoComplete("prodi_id_name", "prodi"),
       disabled: isEdit ? true : false,
@@ -186,12 +228,16 @@ const PerkuliahanTab = ({
       loading: loadingMataKuiah,
       optLabel: "mata_kuliah",
       // optLabel2: "mata_kuliah",
+      open: open.mataKuliah,
+      handleOpen: handleOpen("mataKuliah"),
+      handleClose: handleClose("mataKuliah"),
+      changeOpen: handleChangeOpen("mataKuliah"),
       changeSearch: SearchhandleFilterAutoComplete(
         "mata_kuliah",
         fetchDataMataKuliah
       ),
       onChange: handleChangeAutoComplete("mata_kuliah_id_name", "mata_kuliah"),
-      disabled: isEdit ? true : false,
+      disabled: isEdit || !watch("prodi_id") ? true : false,
     },
     {
       key: "dosen_id",
@@ -203,8 +249,13 @@ const PerkuliahanTab = ({
       data: _.sortBy(watch("prodi_id") ? dataDosen : [], ["full_name"]),
       loading: loadingDosen,
       optLabel: "full_name",
+      open: open.dosen1,
+      handleOpen: handleOpen("dosen1"),
+      handleClose: handleClose("dosen1"),
+      changeOpen: handleChangeOpen("dosen1"),
       changeSearch: SearchhandleFilterAutoComplete("full_name", fetchDataDosen),
       onChange: handleChangeAutoComplete("dosen_id_name", "full_name"),
+      disabled: !watch("prodi_id") ? true : false,
     },
     {
       key: "dosen2_id",
@@ -221,8 +272,13 @@ const PerkuliahanTab = ({
       ),
       loading: loadingDosen,
       optLabel: "full_name",
+      open: open.dosen2,
+      handleOpen: handleOpen("dosen2"),
+      handleClose: handleClose("dosen2"),
+      changeOpen: handleChangeOpen("dosen2"),
       changeSearch: SearchhandleFilterAutoComplete("full_name", fetchDataDosen),
       onChange: handleChangeAutoComplete("dosen2_id_name", "full_name"),
+      disabled: !watch("dosen_id") ? true : false,
     },
     {
       key: "dosen3_id",
@@ -242,8 +298,13 @@ const PerkuliahanTab = ({
       ),
       loading: loadingDosen,
       optLabel: "full_name",
+      open: open.dosen3,
+      handleOpen: handleOpen("dosen3"),
+      handleClose: handleClose("dosen3"),
+      changeOpen: handleChangeOpen("dosen3"),
       changeSearch: SearchhandleFilterAutoComplete("full_name", fetchDataDosen),
       onChange: handleChangeAutoComplete("dosen3_id_name", "full_name"),
+      disabled: !watch("dosen2_id") ? true : false,
     },
     {
       key: "pj_dosen_id",
@@ -255,8 +316,13 @@ const PerkuliahanTab = ({
       data: _.sortBy(watch("prodi_id") ? getPJDosen() : [], ["full_name"]),
       loading: loadingDosen,
       optLabel: "full_name",
+      open: open.pjDosen,
+      handleOpen: handleOpen("pjDosen"),
+      handleClose: handleClose("pjDosen"),
+      changeOpen: handleChangeOpen("pjDosen"),
       changeSearch: SearchhandleFilterAutoComplete("full_name", fetchDataDosen),
       onChange: handleChangeAutoComplete("pj_dosen_id_name", "full_name"),
+      disabled: !watch("prodi_id") ? true : false,
     },
     {
       name: "kelas",
@@ -275,6 +341,10 @@ const PerkuliahanTab = ({
       data: _.sortBy(dataTahunAjaran, ["tahun_ajaran"]),
       loading: loadingTahunAjaran,
       optLabel: "tahun_ajaran",
+      open: open.tahunAjaran,
+      handleOpen: handleOpen("tahunAjaran"),
+      handleClose: handleClose("tahunAjaran"),
+      changeOpen: handleChangeOpen("tahunAjaran"),
       onChange: handleChangeAutoComplete(
         "tahun_ajaran_id_name",
         "tahun_ajaran"
@@ -316,30 +386,6 @@ const PerkuliahanTab = ({
     },
   ];
 
-  const refreshMahasiswa = async () => {
-    const response = await axios.get(`perkuliahan/${id}`);
-    setValueData("mahasiswa", response.data.data.mahasiswa);
-  };
-
-  const [open, setOpen] = useState({
-    dpna: false,
-    cpmk: false,
-  });
-
-  const handleClose = (name) => () => {
-    setOpen((prevState) => ({
-      ...prevState,
-      [name]: false,
-    }));
-  };
-
-  const handleOpen = (name) => () => {
-    setOpen((prevState) => ({
-      ...prevState,
-      [name]: true,
-    }));
-  };
-
   const callbackImportDPNA = async (dataFile) => {
     if (dataFile.length > 1) {
       const dataRequest = {
@@ -347,11 +393,12 @@ const PerkuliahanTab = ({
         id: watch("id"),
       };
 
-      dispatch(uploadDPNA(dataRequest));
-      const mahasiswa = await refreshMahasiswa();
-
-      axios.get(`get-template/${id}`);
-      router.reload();
+      dispatch(uploadDPNA(dataRequest)).then((res) => {
+        if (!res.error) {
+          axios.get(`get-template/${id}`);
+          router.reload();
+        }
+      });
     } else {
       toast.error("File empty");
     }
@@ -364,9 +411,16 @@ const PerkuliahanTab = ({
         id: watch("id"),
       };
 
-      dispatch(uploadCPMK(dataRequest));
-      router.reload();
-      router.reload();
+      dispatch(uploadCPMK(dataRequest))
+        .then((res) => {
+          console.log(res);
+          if (!res.error) {
+            router.reload();
+          }
+        })
+        .catch((err) => {
+          toast.error("Failed to upload CPMK!");
+        });
     } else {
       toast.error("File empty");
     }
@@ -391,17 +445,28 @@ const PerkuliahanTab = ({
     <>
       {isEdit && (
         <>
+          <Backdrop
+            sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            open={backdrop}
+          >
+            <CircularProgress color="inherit" />
+          </Backdrop>
+
           <CardContent>
             <Grid container>
               <ImportDialog
                 callback={callbackImportDPNA}
                 openDialog={open.dpna}
                 handleClose={handleClose("dpna")}
+                handleOpenDialog={() => setBackdrop(true)}
+                handleCloseDialog={() => setBackdrop(false)}
               />
               <ImportDialogCPMK
                 callback={callbackImportCPMK}
                 openDialog={open.cpmk}
                 handleClose={handleClose("cpmk")}
+                handleOpenDialog={() => setBackdrop(true)}
+                handleCloseDialog={() => setBackdrop(false)}
                 id={watch("id")}
               />
 

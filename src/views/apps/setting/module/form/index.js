@@ -11,6 +11,31 @@ import _ from "lodash";
 const Index = ({ control, errors, setValue }) => {
   const dispatch = useDispatch();
 
+  const [open, setOpen] = useState({
+    moduleGroup: false,
+  });
+
+  const handleOpen = (name) => () => {
+    setOpen((prevState) => ({
+      ...prevState,
+      [name]: true,
+    }));
+  };
+
+  const handleClose = (name) => () => {
+    setOpen((prevState) => ({
+      ...prevState,
+      [name]: false,
+    }));
+  };
+
+  const handleChangeOpen = (name) => () => {
+    setOpen((prevState) => ({
+      ...prevState,
+      [name]: !prevState[name],
+    }));
+  };
+
   const { data: dataModuleGroup, loading: loadingModuleGroup } = useSelector(
     (state) => state.moduleGroup
   );
@@ -53,6 +78,10 @@ const Index = ({ control, errors, setValue }) => {
       data: _.sortBy(dataModuleGroup, ["module_name"]),
       loading: loadingModuleGroup,
       optLabel: "module_name",
+      open: open.moduleGroup,
+      handleOpen: handleOpen("moduleGroup"),
+      handleClose: handleClose("moduleGroup"),
+      changeOpen: handleChangeOpen("moduleGroup"),
       onChange: handleChangeAutoComplete("module_group_id_name", "module_name"),
       disabled: true,
     },
