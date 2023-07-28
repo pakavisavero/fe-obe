@@ -237,84 +237,87 @@ const ListData = ({
   }, [page, pageSize, params, dispatch, getData]);
 
   return (
-    <Grid container spacing={6} sx={{ color: "text.primary", fontSize: 11 }}>
-      <Grid item xs={12}>
-        <Breadcrumbs data={dataBreadcrumbs} />
-      </Grid>
-      <Grid item xs={12}>
-        {filterData}
-      </Grid>
-      <Grid item xs={12}>
-        <Card
-          sx={{
-            "& .hot": {
-              backgroundColor: settings.mode === "dark" ? "#DF2E38" : "#FFE9EA",
-              color: "#1a3e72",
-            },
-          }}
-        >
-          <TableHeader
-            selectedRows={selectedRows}
-            url={`${urlData}add`}
-            name={nameLabel}
-            actionExport={actionExport}
-            actionRefresh={actionRefresh}
-            dinamic={checkboxSelection}
-            updateOnly={updateOnly}
-            isImport={isImport}
-            isExport={isExport}
-            isDeactivate={isDeactivate}
-            isCreate={permCreate}
-            params={params}
-            storeName={storeName}
-            exportName={exportName}
-            templateFile={templateFile}
-            importFunction={importFunction}
-            datagrid={datagrid}
-          />
-
-          <DataGrid
-            // style={{ fontSize: 11 }}
-            disableColumnFilter
-            autoHeight
-            pagination
-            rows={datagrid}
-            columns={columns}
-            // checkboxSelection={checkboxSelection && updateOnly}
-            loading={loading}
-            disableSelectionOnClick
-            // disableColumnFilter
-            pageSize={pageSize}
-            rowsPerPageOptions={[10, 20, 50, 100]}
-            onSelectionModelChange={(rows) => setSelectedRows(rows)}
-            onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
-            // getRowClassName={params => (!params.row.is_active ? 'hot' : '')}
-            getRowClassName={(params) => {
-              if ("is_active" in params.row && redNotActive) {
-                return !params.row.is_active ? "hot" : "";
-              }
-              return "";
-            }}
-            onColumnVisibilityModelChange={handleVisibleGrid}
-            components={{
-              // Toolbar: TableHeader,
-              LoadingOverlay: LinearProgress,
-            }}
-            componentsProps={{
-              toolbar: {
-                reloadCallback: () => {
-                  dispatch(updateData(data));
-                },
+    <>
+      <Grid container spacing={6} sx={{ color: "text.primary", fontSize: 11 }}>
+        <Grid item xs={12}>
+          <Breadcrumbs data={dataBreadcrumbs} />
+        </Grid>
+        <Grid item xs={12}>
+          {filterData}
+        </Grid>
+        <Grid item xs={12}>
+          <Card
+            sx={{
+              "& .hot": {
+                backgroundColor:
+                  settings.mode === "dark" ? "#DF2E38" : "#FFE9EA",
+                color: "#1a3e72",
               },
             }}
-            paginationMode="server"
-            onPageChange={(newPage) => setPage(newPage)}
-            page={page}
-            rowCount={total}
-          />
-        </Card>
+          >
+            <TableHeader
+              selectedRows={selectedRows}
+              url={`${urlData}add`}
+              name={nameLabel}
+              actionExport={actionExport}
+              actionRefresh={actionRefresh}
+              dinamic={checkboxSelection}
+              updateOnly={updateOnly}
+              isImport={isImport}
+              isExport={isExport}
+              isDeactivate={isDeactivate}
+              isCreate={permCreate}
+              params={params}
+              storeName={storeName}
+              exportName={exportName}
+              templateFile={templateFile}
+              importFunction={importFunction}
+              datagrid={datagrid}
+            />
+
+            <DataGrid
+              // style={{ fontSize: 11 }}
+              disableColumnFilter
+              autoHeight
+              pagination
+              rows={datagrid}
+              columns={columns}
+              // checkboxSelection={checkboxSelection && updateOnly}
+              loading={loading}
+              disableSelectionOnClick
+              // disableColumnFilter
+              pageSize={pageSize}
+              rowsPerPageOptions={[10, 20, 50, 100]}
+              onSelectionModelChange={(rows) => setSelectedRows(rows)}
+              onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+              // getRowClassName={params => (!params.row.is_active ? 'hot' : '')}
+              getRowClassName={(params) => {
+                if ("is_active" in params.row && redNotActive) {
+                  return !params.row.is_active ? "hot" : "";
+                }
+                return "";
+              }}
+              onColumnVisibilityModelChange={handleVisibleGrid}
+              components={{
+                // Toolbar: TableHeader,
+                LoadingOverlay: LinearProgress,
+              }}
+              componentsProps={{
+                toolbar: {
+                  reloadCallback: () => {
+                    dispatch(updateData(data));
+                  },
+                },
+              }}
+              paginationMode="server"
+              onPageChange={(newPage) => setPage(newPage)}
+              page={page}
+              rowCount={total}
+            />
+          </Card>
+        </Grid>
       </Grid>
-    </Grid>
+    </>
   );
 };
 

@@ -1,6 +1,6 @@
 // ** Next Import
 // ** MUI Imports
-import { Box } from "@mui/material";
+import { Box, Backdrop, CircularProgress } from "@mui/material";
 import Button from "@mui/material/Button";
 import axios from "src/configs/AxiosSetting";
 import { getCookie } from "cookies-next";
@@ -40,6 +40,7 @@ const TableHeader = (props) => {
   const router = useRouter();
 
   const [open, setOpen] = useState(false);
+  const [backdrop, setBackdrop] = useState(false);
   const [openDeactivate, setOpenDeactivate] = useState(false);
 
   const handleClose = () => setOpen(false);
@@ -48,6 +49,7 @@ const TableHeader = (props) => {
   const dispatch = useDispatch();
 
   const callbackImport = (dataFile) => {
+    setBackdrop(true);
     if (dataFile.length > 1) {
       console.log(dataFile);
       const dataRequest = { data: dataFile };
@@ -55,6 +57,8 @@ const TableHeader = (props) => {
     } else {
       toast.error("File empty");
     }
+
+    setBackdrop(false);
   };
 
   const handleDownload = async () => {
@@ -63,6 +67,13 @@ const TableHeader = (props) => {
 
   return (
     <>
+      <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={backdrop}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
+
       {openDeactivate && (
         <DialogDeactivate
           open={openDeactivate}
@@ -75,6 +86,8 @@ const TableHeader = (props) => {
         templateFile={templateFile}
         openDialog={open}
         handleClose={handleClose}
+        handleOpenDialog={() => setBackdrop(true)}
+        handleCloseDialog={() => setBackdrop(false)}
       />
       <Box
         sx={{
