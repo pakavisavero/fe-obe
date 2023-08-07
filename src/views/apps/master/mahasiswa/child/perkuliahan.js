@@ -50,7 +50,6 @@ function Perkuliahan({ control, store, watch }) {
     }
 
     window.open(`${url}?selected=all`, "_blank");
-    // router.push(`/print/raport-mhs/${id}`);
   };
 
   const defaultColumns = [

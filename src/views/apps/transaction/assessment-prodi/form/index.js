@@ -2,20 +2,25 @@ import { CardContent, Grid, Button, Divider, Box, Card } from "@mui/material";
 
 import React, { useEffect, useState } from "react";
 import Typography from "@mui/material/Typography";
+import Printer from "mdi-material-ui/Printer";
 
 import _ from "lodash";
 
-import { DataGrid, GridRowParams } from "@mui/x-data-grid";
-import axios from "src/configs/AxiosSetting";
+import { DataGrid } from "@mui/x-data-grid";
 
 import { useDispatch, useSelector } from "react-redux";
 import { DrawColumn, DrawFilter, DrawField } from "src/utils/field";
 
 import DialogSiklus from "../child/dialogSiklus";
 import GraphicAssessment from "../child/graphicAssessment";
+import { useRouter } from "next/router";
 
 const Index = ({ control, errors, data, setValue, watch, isEdit }) => {
   const dispatch = useDispatch();
+
+  const router = useRouter();
+  const { id } = router.query;
+
   const [openDialog, setOpenDialog] = useState(false);
   const [pageSize, setPageSize] = useState(10);
 
@@ -90,6 +95,12 @@ const Index = ({ control, errors, data, setValue, watch, isEdit }) => {
 
     setLoading(false);
   }, []);
+
+  const navigatePrint = (id) => {
+    const url = `/print/assessment-prodi/${id}`;
+
+    window.open(url, "_blank");
+  };
 
   const fieldsLeft = [
     {
@@ -177,6 +188,22 @@ const Index = ({ control, errors, data, setValue, watch, isEdit }) => {
       </CardContent>
 
       <CardContent sx={{ mt: 6 }}>
+        <Grid container>
+          <Grid item sm={12}>
+            <Box display="flex" justifyContent="flex-end">
+              <Button
+                size="medium"
+                variant="contained"
+                sx={{ mb: 8 }}
+                startIcon={<Printer fontSize="small" />}
+                onClick={() => navigatePrint(id)}
+              >
+                Print Assessment
+              </Button>
+            </Box>
+          </Grid>
+        </Grid>
+
         <DataGrid
           autoHeight
           pagination

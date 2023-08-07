@@ -3282,6 +3282,11 @@
     "prop-types" "^15.7.2"
     "react-is" "^16.8.0 || ^17.0.0"
 
+"@medicaboo/react-pdf-table@^0.5.1":
+  "integrity" "sha512-i+KiwOmHiVlPVbpjb/0b8p2eh42jb+a6IMP16fWAp0zQEbMGCyvJxEjZM8Xl/8qyr9rJYKUjKohGhZzyJdEFDQ=="
+  "resolved" "https://registry.npmjs.org/@medicaboo/react-pdf-table/-/react-pdf-table-0.5.1.tgz"
+  "version" "0.5.1"
+
 "@mui/base@5.0.0-alpha.79":
   "integrity" "sha512-/lZLF027BkiEjM8MIYoeS/FEhTKf+41ePU9SOijMGrCin1Y0Igucw+IHa1fF8HXD7wDbFKqHuso3J1jMG8wyNw=="
   "resolved" "https://registry.npmjs.org/@mui/base/-/base-5.0.0-alpha.79.tgz"
