@@ -98,7 +98,7 @@ function Mahasiswa({ control, store, watch }) {
             >
               {`
                                 ${
-                                  row.raport?.nilai_pokok.nilai_akhir.toFixed(
+                                  row.raport?.nilai_pokok?.nilai_akhir?.toFixed(
                                     2
                                   ) || "-"
                                 }
@@ -121,7 +121,7 @@ function Mahasiswa({ control, store, watch }) {
             >
               {`
                                 ${
-                                  row.raport?.nilai_pokok.nilai_akhir_huruf ||
+                                  row.raport?.nilai_pokok?.nilai_akhir_huruf ||
                                   "-"
                                 }
                             `}
@@ -143,7 +143,7 @@ function Mahasiswa({ control, store, watch }) {
                 color: getColorNilai(row.raport.nilai_pokok.keterangan),
               }}
             >
-              {`${row.raport?.nilai_pokok.keterangan.toUpperCase() || "-"}`}
+              {`${row.raport?.nilai_pokok?.keterangan?.toUpperCase() || "-"}`}
             </Typography>
           );
         },

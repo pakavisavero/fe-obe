@@ -187,7 +187,7 @@ function Index() {
     },
     {
       name: "full_name",
-      minWidth: 200,
+      minWidth: 400,
       headerName: "Nama Lengkap",
       value: (value) => value.full_name,
     },

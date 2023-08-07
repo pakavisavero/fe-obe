@@ -13,7 +13,7 @@ import { getCookie } from "cookies-next";
 
 const Edit = ({ data }) => {
   const dataBreadcrumbs = [
-    { name: "Transaction" },
+    { name: "Main Menu" },
     { name: "History KBM", link: "/apps/transaction/history-kbm/list" },
     {
       name:

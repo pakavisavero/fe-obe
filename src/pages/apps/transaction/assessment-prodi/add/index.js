@@ -14,7 +14,7 @@ import { useAuth } from "src/hooks/useAuth";
 
 const Add = ({ data }) => {
   const dataBreadcrumbs = [
-    { name: "Transaction" },
+    { name: "Main Menu" },
     {
       name: "Assessment Prodi",
       link: "/apps/transaction/assessment-prodi/list",

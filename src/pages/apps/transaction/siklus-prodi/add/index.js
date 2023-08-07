@@ -14,7 +14,7 @@ import { useAuth } from "src/hooks/useAuth";
 
 const Add = ({ data }) => {
   const dataBreadcrumbs = [
-    { name: "Transaction" },
+    { name: "Main Menu" },
     { name: "Siklus Prodi", link: "/apps/transaction/siklus-prodi/list" },
     { name: "New Siklus Prodi" },
   ];

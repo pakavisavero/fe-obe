@@ -22,10 +22,11 @@ const Index = ({ control, errors, data, setValue, watch, isEdit }) => {
   const [datagrid, setDatagrid] = useState([]);
   const [detailData, setDetailData] = useState({});
 
+  const [graph, setGraph] = useState([]);
+  const [cpl, setCpl] = useState([]);
+
   const [colors, setColor] = useState([]);
   const [loading, setLoading] = useState(true);
-
-  console.log(watch("siklus"));
 
   function getRandomColor() {
     var letters = "ABCDEF".split("");
@@ -56,14 +57,35 @@ const Index = ({ control, errors, data, setValue, watch, isEdit }) => {
     if (!isEdit) setValue("siklus", row);
   };
 
+  const initializeGraph = () => {
+    for (const sik of watch("listSiklus")) {
+      let values = [];
+
+      for (const graph of watch("graph")) {
+        for (const key in graph) {
+          const filterSiklus = graph[key].filter(
+            (item) => item.siklus === sik
+          )[0];
+          values.push(
+            parseFloat(filterSiklus.value / filterSiklus.sum).toFixed(2)
+          );
+          setCpl((prev) => [...prev, key]);
+        }
+      }
+      setGraph((prev) => [...prev, values]);
+    }
+  };
+
   useEffect(() => {
     setColor(generateColor(2));
     if (!isEdit) {
       setDatagrid(watch("data"));
     } else {
       let bulk = [];
+
       for (let data of watch("siklus")) bulk.push(data.siklus);
       setDatagrid(bulk);
+      initializeGraph();
     }
 
     setLoading(false);
@@ -119,6 +141,10 @@ const Index = ({ control, errors, data, setValue, watch, isEdit }) => {
   ];
 
   const fields = [...columns.map((col) => DrawColumn(col))];
+
+  function getUnique(value, index, array) {
+    return array.indexOf(value) === index;
+  }
 
   return (
     <>
@@ -191,13 +217,10 @@ const Index = ({ control, errors, data, setValue, watch, isEdit }) => {
             <Card sx={{ height: 600, padding: 10 }}>
               <GraphicAssessment
                 title={`Perbandingan Siklus`.toUpperCase()}
-                nilai={[
-                  [10, 20],
-                  [30, 40],
-                ]}
-                labels={["CPL1", "CPL2"]}
+                nilai={graph}
+                labels={cpl.filter(getUnique)}
                 colors={colors}
-                legends={["Minimum", "CPL Mahasiswa"]}
+                legends={watch("listSiklus")}
               />
             </Card>
           </Grid>

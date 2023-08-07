@@ -14,7 +14,7 @@ import { Modules } from "src/utils/token";
 
 const Edit = ({ data }) => {
   const dataBreadcrumbs = [
-    { name: "Transaction" },
+    { name: "Main Menu" },
     { name: "Perkuliahan", link: "/apps/transaction/perkuliahan/list" },
     {
       name:

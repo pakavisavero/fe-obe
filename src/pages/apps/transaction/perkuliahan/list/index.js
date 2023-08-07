@@ -290,12 +290,14 @@ function Index() {
     },
     {
       name: "mata_kuliah",
-      minWidth: 250,
+      minWidth: 350,
       headerName: "Mata Kuliah",
       type: "link",
       link: "/apps/transaction/perkuliahan/edit/",
       value: (value) =>
-        value.mataKuliah.mata_kuliah ? value.mataKuliah.mata_kuliah : "-",
+        value.mataKuliah.mata_kuliah
+          ? value.mataKuliah.kode_mk + " - " + value.mataKuliah.mata_kuliah
+          : "-",
       valueLink: (value) => value.id,
     },
     {

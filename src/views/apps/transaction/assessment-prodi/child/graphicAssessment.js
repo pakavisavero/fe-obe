@@ -58,7 +58,7 @@ const GraphicAssessment = ({
           backgroundColor: colors[i],
           borderColor: colors[i],
           borderWidth: 1,
-          label: labels[i],
+          label: legends[i],
         });
 
         i++;
