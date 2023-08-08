@@ -4782,6 +4782,13 @@
     "is-blob" "^2.1.0"
     "is-buffer" "^2.0.5"
 
+"axios@^0.24.0":
+  "integrity" "sha512-Q6cWsys88HoPgAaFAVUb0WpPk0O8iTeisR9IMqy9G8AbO4NlpVknrnQS03zzF9PGAWgO3cgletO3VjV/P7VztA=="
+  "resolved" "https://registry.npmjs.org/axios/-/axios-0.24.0.tgz"
+  "version" "0.24.0"
+  dependencies:
+    "follow-redirects" "^1.14.4"
+
 "axios@0.21.4":
   "integrity" "sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg=="
   "resolved" "https://registry.npmjs.org/axios/-/axios-0.21.4.tgz"
@@ -5161,6 +5168,14 @@
   "integrity" "sha512-14ZU30lH7n89oq+A4bWaJPnAG8a7ZTk7dKf48YAzMvJjQtjrgg5Dpk9f+LbjCF6bpx3RAGTeL13IXpKQYyRvlw=="
   "resolved" "https://registry.npmjs.org/chartjs-plugin-datalabels/-/chartjs-plugin-datalabels-2.2.0.tgz"
   "version" "2.2.0"
+
+"chartjs-to-image@^1.2.1":
+  "integrity" "sha512-TrXBRkRhBpOSG1IQV0ngg0kRGZhRPutVTabdfudn0d7SXU6fXxRx8vISqZi97Ih5sgaha1eDXEUnaGdwz/WeBQ=="
+  "resolved" "https://registry.npmjs.org/chartjs-to-image/-/chartjs-to-image-1.2.1.tgz"
+  "version" "1.2.1"
+  dependencies:
+    "axios" "^0.24.0"
+    "javascript-stringify" "^2.1.0"
 
 "chokidar@3.5.3":
   "integrity" "sha512-Dr3sfKRP6oTcjf2JmUmFJfeVMvXBdegxB0iVQ5eb2V10uFJUCAS8OByZdVAyVb8xXNz3GjjTgj9kLWsZTqE6kw=="
@@ -6500,7 +6515,7 @@
     "tabbable" "^3.1.2"
     "xtend" "^4.0.1"
 
-"follow-redirects@^1.14.0", "follow-redirects@^1.14.9":
+"follow-redirects@^1.14.0", "follow-redirects@^1.14.4", "follow-redirects@^1.14.9":
   "integrity" "sha512-yLAMQs+k0b2m7cVxpS1VKJVvoz7SS9Td1zss3XRwXj+ZDH00RJgnuLx7E44wx02kQLrdM3aOOy+FpzS7+8OizA=="
   "resolved" "https://registry.npmjs.org/follow-redirects/-/follow-redirects-1.15.1.tgz"
   "version" "1.15.1"
@@ -7364,6 +7379,11 @@
   dependencies:
     "node-fetch" "^2.6.1"
     "unfetch" "^4.2.0"
+
+"javascript-stringify@^2.1.0":
+  "integrity" "sha512-JVAfqNPTvNq3sB/VHQJAFxN/sPgKnsKrCwyRt15zwNCdrMMJDdcEOdubuy+DuJYYdm0ox1J4uzEuYKkN+9yhVg=="
+  "resolved" "https://registry.npmjs.org/javascript-stringify/-/javascript-stringify-2.1.0.tgz"
+  "version" "2.1.0"
 
 "jju@^1.4.0":
   "integrity" "sha512-8wb9Yw966OSxApiCt0K3yNJL8pnNeIv+OEq2YMidz4FKP6nonSRoOXc80iXY4JaN2FC11B9qsNmDsm+ZOfMROA=="

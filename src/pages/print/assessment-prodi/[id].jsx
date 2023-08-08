@@ -18,6 +18,8 @@ import { useAuth } from "src/hooks/useAuth";
 import { Table } from "@medicaboo/react-pdf-table";
 import axios from "src/configs/AxiosSetting";
 
+import ChartJsImage from "chartjs-to-image";
+
 Font.register({
   family: "Calibri",
   fonts: [{ src: "/font/calibri.ttf" }],
@@ -92,7 +94,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
   },
   headerSiklus: {
-    height: "40px",
+    height: "35px",
     borderRight: "1px solid grey",
     borderBottom: "1px solid grey",
     display: "flex",
@@ -135,7 +137,9 @@ const AssessmentProdi = ({ id }) => {
   const router = useRouter();
   const auth = useAuth();
 
+  const [imageSrc, setImageSrc] = useState("");
   const [loading, setLoading] = useState(true);
+
   const [pks, setPks] = useState([]);
   const [siklus, setSiklus] = useState([]);
   const [width, setWidth] = useState();
@@ -154,6 +158,38 @@ const AssessmentProdi = ({ id }) => {
 
   useEffect(() => {
     getPerkuliahan();
+
+    const myChart = new ChartJsImage();
+    myChart.setConfig({
+      type: "bar",
+      data: {
+        labels: ["Hello world", "Foo bar", "Sav"],
+        datasets: [
+          {
+            label: "Foo",
+            backgroundColor: "red",
+            data: [1, 2, 3],
+          },
+          {
+            label: "Foo",
+            data: [1, 2, 3],
+          },
+        ],
+      },
+      options: {
+        title: {
+          display: true,
+          text: "Pengukuran Pemenuhan CPP",
+          padding: 10,
+        },
+        legend: {
+          display: true,
+          position: "bottom",
+        },
+      },
+    });
+    myChart.toDataUrl().then((data) => setImageSrc(data));
+
     setLoading(false);
   }, []);
 
@@ -285,6 +321,17 @@ const AssessmentProdi = ({ id }) => {
                 </View>
               ))}
             </View>
+
+            <View
+              style={{
+                marginTop: "30px",
+                height: "320px",
+                border: "0.5px solid grey",
+                padding: "25px",
+              }}
+            >
+              <Image src={`${imageSrc}`} />
+            </View>
           </Page>
         </Document>
       </PDFViewer>
@@ -293,19 +340,5 @@ const AssessmentProdi = ({ id }) => {
 };
 
 AssessmentProdi.getLayout = (page) => <BlankLayout>{page}</BlankLayout>;
-
-export const getServerSideProps = async ({ params, req, res }) => {
-  try {
-    return {
-      props: {
-        id: params?.id,
-      },
-    };
-  } catch (error) {
-    return {
-      notFound: true,
-    };
-  }
-};
 
 export default AssessmentProdi;

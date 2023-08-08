@@ -68,12 +68,19 @@ const Index = ({ control, errors, data, setValue, watch, isEdit }) => {
 
       for (const graph of watch("graph")) {
         for (const key in graph) {
+          let value = 0;
+          let sum = 1;
+
           const filterSiklus = graph[key].filter(
             (item) => item.siklus === sik
           )[0];
-          values.push(
-            parseFloat(filterSiklus.value / filterSiklus.sum).toFixed(2)
-          );
+
+          if (filterSiklus) {
+            value = filterSiklus.value;
+            sum = filterSiklus.sum;
+          }
+
+          values.push(parseFloat(value / sum).toFixed(2));
           setCpl((prev) => [...prev, key]);
         }
       }
@@ -156,6 +163,8 @@ const Index = ({ control, errors, data, setValue, watch, isEdit }) => {
   function getUnique(value, index, array) {
     return array.indexOf(value) === index;
   }
+
+  console.log(graph);
 
   return (
     <>
@@ -245,7 +254,9 @@ const Index = ({ control, errors, data, setValue, watch, isEdit }) => {
               <GraphicAssessment
                 title={`Perbandingan Siklus`.toUpperCase()}
                 nilai={graph}
-                labels={cpl.filter(getUnique)}
+                labels={cpl
+                  .filter(getUnique)
+                  .map((item) => item.replace("CPL", "PK"))}
                 colors={colors}
                 legends={watch("listSiklus")}
               />

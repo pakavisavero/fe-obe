@@ -59,6 +59,7 @@
     "babel-eslint": "10.1.0",
     "chart.js": "^3.7.1",
     "chartjs-plugin-datalabels": "^2.2.0",
+    "chartjs-to-image": "^1.2.1",
     "classnames": "^2.3.2",
     "cleave.js": "1.6.0",
     "clipboard-copy": "4.0.1",
@@ -121,5 +122,14 @@
     "immutable": "^4.3.1",
     "next-transpile-modules": "^9.0.0",
     "prettier": "2.6.2"
+  },
+  "browser": {
+    "crypto": false,
+    "fs": false,
+    "path": false,
+    "os": false,
+    "net": false,
+    "stream": false,
+    "tls": false
   }
 }
